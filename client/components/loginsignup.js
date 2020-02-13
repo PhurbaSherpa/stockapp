@@ -2,44 +2,60 @@ import React from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { logIn, signUp } from "../store";
+import { Link } from "react-router-dom";
 
 const loginsignup = props => {
   const { name, displayName, handleSubmit, error } = props;
 
   return (
-    <div>
+    <div id="auth-form">
       <form onSubmit={handleSubmit} name={name}>
         {name === "signup" ? (
-          <div>
-            <div>
-              <label htmlFor="firstName">
-                <small>FirstName</small>
-              </label>
-              <input name="firstName" type="text" />
-            </div>
-            <div>
-              <label htmlFor="lastName">
-                <small>LastName</small>
-              </label>
-              <input name="lastName" type="text" />
-            </div>
+          <div className="inputContainer">
+            <input
+              placeholder="First Name"
+              className="input"
+              name="firstName"
+              type="text"
+            />
           </div>
         ) : null}
-        <div>
-          <label htmlFor="email">
-            <small>Email</small>
-          </label>
-          <input name="email" type="text" />
+        {name === "signup" ? (
+          <div className="inputContainer">
+            <input
+              placeholder="Last Name"
+              className="input"
+              name="lastName"
+              type="text"
+            />
+          </div>
+        ) : null}
+        <div className="inputContainer">
+          <input
+            placeholder="Email"
+            className="input"
+            name="email"
+            type="text"
+          />
         </div>
-        <div>
-          <label htmlFor="password">
-            <small>Password</small>
-          </label>
-          <input name="password" type="password" />
+        <div className="inputContainer">
+          <input
+            placeholder="Password"
+            className="input"
+            name="password"
+            type="password"
+          />
         </div>
-        <div>
-          <button type="submit">{displayName}</button>
+        <div id="auth-container">
+          <button id="auth-button" type="submit">
+            {displayName}
+          </button>
         </div>
+        {name === "login" ? (
+          <Link to="/signup">Don't have an account yet?</Link>
+        ) : (
+          <Link to="/login">Already have an account?</Link>
+        )}
         {error && error.response && <div> {error.response.data} </div>}
       </form>
       <a href="/auth/google">{displayName} with Google</a>
