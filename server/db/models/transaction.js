@@ -12,7 +12,7 @@ const Transaction = db.define("transaction", {
   price: {
     type: Sequelize.DECIMAL(10, 2)
   },
-  quantity: {
+  shares: {
     type: Sequelize.INTEGER,
     min: 1
   }
