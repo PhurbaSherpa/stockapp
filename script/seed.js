@@ -58,12 +58,14 @@ async function seed() {
     Stock.create({
       userId: 1,
       symbol: "AAPL",
-      totalShares: 2
+      totalShares: 2,
+      totalValue: 650.38
     }),
     Stock.create({
       userId: 1,
       symbol: "MSFT",
-      totalShares: 5
+      totalShares: 5,
+      totalValue: 920.1
     })
   ]);
 

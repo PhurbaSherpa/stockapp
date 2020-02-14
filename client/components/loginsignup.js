@@ -1,10 +1,9 @@
 import React from "react";
 import { connect } from "react-redux";
-import PropTypes from "prop-types";
 import { logIn, signUp } from "../store";
 import { Link } from "react-router-dom";
 
-const loginsignup = props => {
+const LoginSignup = props => {
   const { name, displayName, handleSubmit, error } = props;
 
   return (
@@ -97,12 +96,5 @@ const mapDispatch = dispatch => {
   };
 };
 
-export const Login = connect(mapLogin, mapDispatch)(loginsignup);
-export const Signup = connect(mapSignup, mapDispatch)(loginsignup);
-
-loginsignup.propTypes = {
-  name: PropTypes.string.isRequired,
-  displayName: PropTypes.string.isRequired,
-  handleSubmit: PropTypes.func.isRequired,
-  error: PropTypes.object
-};
+export const Login = connect(mapLogin, mapDispatch)(LoginSignup);
+export const Signup = connect(mapSignup, mapDispatch)(LoginSignup);
