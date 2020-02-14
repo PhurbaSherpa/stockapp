@@ -7,8 +7,8 @@ const LoginSignup = props => {
   const { name, displayName, handleSubmit, error } = props;
 
   return (
-    <div id="auth-form">
-      <form onSubmit={handleSubmit} name={name}>
+    <div id="auth-form-container">
+      <form id="auth-form" onSubmit={handleSubmit} name={name}>
         {name === "signup" ? (
           <div className="inputContainer">
             <input
