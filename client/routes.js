@@ -7,7 +7,7 @@ import { me } from "./store";
 const Routes = props => {
   useEffect(() => {
     props.loadInitialData;
-  }, [isLoggedIn]);
+  }, [props.isLoggedIn]);
   const { isLoggedIn } = props;
   return (
     <Switch>

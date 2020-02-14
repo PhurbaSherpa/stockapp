@@ -11,26 +11,20 @@ const portfolioState = {
   totalValue: 0
 };
 
-const gotPortfolio = portfolio => {
-  return {
-    type: GOT_PORTFOLIO,
-    portfolio
-  };
-};
+const gotPortfolio = portfolio => ({
+  type: GOT_PORTFOLIO,
+  portfolio
+});
 
-const gotLatestValues = portfolio => {
-  return {
-    type: GOT_LATEST_VALUES,
-    portfolio
-  };
-};
+const gotLatestValues = portfolio => ({
+  type: GOT_LATEST_VALUES,
+  portfolio
+});
 
-const boughtStock = stock => {
-  return {
-    type: BOUGHT_STOCK,
-    stock
-  };
-};
+const boughtStock = stock => ({
+  type: BOUGHT_STOCK,
+  stock
+});
 
 export const getPortfolio = () => async dispatch => {
   const { data } = await axios.get("/api/portfolio");
@@ -38,13 +32,16 @@ export const getPortfolio = () => async dispatch => {
 };
 
 export const getLatestValues = symbols => async dispatch => {
+  symbols = symbols
+    .map(stock => {
+      return stock.symbol;
+    })
+    .join(",");
   let { data } = await axios.get(
     `https://cloud.iexapis.com/stable/stock/market/batch?symbols=${symbols}&types=quote&token=${process.env.STOCK_API_TOKEN}`
   );
-  console.log(data);
 
   let resdata = await axios.put("/api/portfolio", { data });
-  console.log(resdata.data);
   dispatch(gotLatestValues(resdata.data));
 };
 

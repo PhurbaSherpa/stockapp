@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
-import { addStock } from "../store/portfolio";
+import { addStock, getStockInfo } from "../store";
 
 const BuySellBox = props => {
+  const [tickerSymbol, setTickerSymbol] = useState("");
+
   return (
     <div id="buy-sell-container">
       <div id="stock-info">
@@ -15,6 +17,9 @@ const BuySellBox = props => {
           placeholder="Ticker Symbol"
           name="symbol"
           type="text"
+          onChange={event => {
+            setTickerSymbol(event.target.value);
+          }}
         />
         <input
           className="buy-sell-box"
@@ -22,7 +27,13 @@ const BuySellBox = props => {
           name="quantity"
           type="number"
         />
-        <button onClick={() => {}} className="buy-sell-box">
+        <button
+          type="button"
+          onClick={() => {
+            props.getStockInfo(tickerSymbol);
+          }}
+          className="buy-sell-box"
+        >
           Search
         </button>
         <button className="buy-sell-box" type="submit">
@@ -33,7 +44,9 @@ const BuySellBox = props => {
   );
 };
 
-const mapStateToProps = state => {};
+const mapStateToProps = state => ({
+  marketStatus: state.marketStatus
+});
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -41,8 +54,9 @@ const mapDispatchToProps = dispatch => {
       const symbol = evt.target.symbol.value;
       const quantity = evt.target.quantity.value;
       dispatch(addStock(symbol, quantity));
-    }
+    },
+    getStockInfo: symbol => dispatch(getStockInfo(symbol))
   };
 };
 
-export default connect(null, mapDispatchToProps)(BuySellBox);
+export default connect(mapStateToProps, mapDispatchToProps)(BuySellBox);

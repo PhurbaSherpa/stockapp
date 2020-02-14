@@ -1,11 +1,10 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { getPortfolio, getLatestValues } from "../store";
+import { getPortfolio, getLatestValues, getMarketStatus } from "../store";
 import SingleSymbol from "./singleSymbol";
 import BuySellBox from "./buysellbox";
 
 const HomePortfolio = props => {
-  const date = new Date();
   useEffect(() => {
     fetchData();
     let symbols = props.stocks
@@ -13,27 +12,17 @@ const HomePortfolio = props => {
         return stock.symbol;
       })
       .join(",");
-    let interval = setInterval(() => {
-      props.getLatestValues(symbols, interval);
-    }, 60000);
-    checkMarket(interval);
-
+    if (props.marketStatus === "open") {
+      let interval = setInterval(() => {
+        if (props.marketStatus === "closed") {
+          clearInterval(interval);
+        }
+        props.getLatestValues(symbols);
+      }, 60000);
+    }
     async function fetchData() {
       await props.getPortfolio();
-    }
-    function checkMarket(interval) {
-      let day = date.getDay(); // [sun,moon,tues,wed,thurs,fri,sat]
-      let hour = date.getHours(); // 0-23
-      let minute = date.getMinutes(); // 0-59
-      if (
-        (hour === 9 && minute < 30) ||
-        hour < 9 ||
-        hour >= 16 ||
-        day === 0 ||
-        day === 6
-      ) {
-        clearInterval(interval);
-      }
+      await props.getMarketStatus();
     }
   }, [props.portfolioValue]);
 
@@ -72,14 +61,16 @@ const mapStateToProps = state => {
   return {
     stocks: state.portfolio.stocks,
     portfolioValue: state.portfolio.totalValue,
-    balance: state.user.balance
+    balance: state.user.balance,
+    marketStatus: state.marketStatus
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     getPortfolio: () => dispatch(getPortfolio()),
-    getLatestValues: symbols => dispatch(getLatestValues(symbols))
+    getLatestValues: symbols => dispatch(getLatestValues(symbols)),
+    getMarketStatus: () => dispatch(getMarketStatus())
   };
 };
 
