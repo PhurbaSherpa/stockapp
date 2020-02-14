@@ -59,13 +59,15 @@ async function seed() {
       userId: 1,
       symbol: "AAPL",
       totalShares: 2,
-      totalValue: 650.38
+      totalValue: 650.38,
+      status: "POSITIVE"
     }),
     Stock.create({
       userId: 1,
       symbol: "MSFT",
       totalShares: 5,
-      totalValue: 920.1
+      totalValue: 920.1,
+      status: "NEGATIVE"
     })
   ]);
 

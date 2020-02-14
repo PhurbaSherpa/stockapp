@@ -17,3 +17,31 @@ router.get("/", async (req, res, next) => {
     next(error);
   }
 });
+
+router.put("/", async (req, res, next) => {
+  let values = req.body.data;
+  try {
+    const stocks = await Stock.findAll({
+      where: {
+        userId: req.user.id
+      }
+    });
+    if (stocks) {
+      stocks.forEach(async stock => {
+        const latestPrice = values[stock.symbol].quote.latestPrice;
+        const openPrice = values[stock.symbol].quote.open;
+        if (latestPrice > openPrice) {
+          stock.status = "POSITIVE";
+        } else if (latestPrice < openPrice) {
+          stock.status = "NEGATIVE";
+        } else {
+          stock.status = "EQUAL";
+        }
+        stock.totalValue = (latestPrice * stock.totalShares).toFixed(2);
+        await stock.save();
+      });
+      let value = await Stock.portfolioValue(req.user.id);
+      res.json({ stocks, value });
+    }
+  } catch (error) {}
+});

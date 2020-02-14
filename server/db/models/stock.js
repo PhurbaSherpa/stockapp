@@ -14,6 +14,9 @@ const Stock = db.define("stock", {
   totalShares: {
     type: Sequelize.INTEGER,
     min: 1
+  },
+  status: {
+    type: Sequelize.ENUM(["POSITIVE", "NEGATIVE", "EQUAL"])
   }
 });
 

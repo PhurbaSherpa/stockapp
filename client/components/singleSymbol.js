@@ -1,11 +1,26 @@
-import React from "react";
+import React, { Component } from "react";
+import { connect } from "react-redux";
 
-export default function singleSymbol(props) {
-  return (
-    <div className="singleSymbol">
-      <div>{props.symbol}</div>
-      <div>{props.shares}</div>
-      <div>{props.total}</div>
-    </div>
-  );
+class SingleSymbol extends Component {
+  render() {
+    let color = "grey";
+    if (this.props.status === "POSITIVE") {
+      color = "green";
+    }
+    if (this.props.status === "NEGATIVE") {
+      color = "red";
+    }
+    return (
+      <div className="singleSymbol">
+        <div>{this.props.symbol}</div>
+        <div>{this.props.shares}</div>
+        <div style={{ color: color }}>{this.props.total}</div>
+      </div>
+    );
+  }
 }
+
+const mapStateToProps = state => ({});
+const mapDispatchToProps = dispatch => ({});
+
+export default connect(mapStateToProps, mapDispatchToProps)(SingleSymbol);
