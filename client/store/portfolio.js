@@ -2,6 +2,7 @@ import axios from "axios";
 
 const GOT_PORTFOLIO = "GOT_PORTFOLIO";
 const GOT_LATEST_VALUES = "GOT_LATEST_VALUES";
+const BOUGHT_STOCK = "BOUGHT_STOCK";
 
 require("../../secrets");
 
@@ -21,6 +22,13 @@ const gotLatestValues = portfolio => {
   return {
     type: GOT_LATEST_VALUES,
     portfolio
+  };
+};
+
+const boughtStock = stock => {
+  return {
+    type: BOUGHT_STOCK,
+    stock
   };
 };
 

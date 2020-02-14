@@ -82,8 +82,17 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  width: 30%;
+  width: 30vw;
   height: 40vh;
+}
+
+#stock-info {
+  font-size: 1rem;
+  margin: 5%;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
 }
 
 #buy-sell-form {
@@ -95,13 +104,8 @@
   width: 100%;
 }
 
-#buy-sell-form div,
-#buy-sell-form button {
-  height: 30%;
-  width: 100%;
-}
-
-#buy-sell-form div input {
-  height: 50%;
+.buy-sell-box {
+  margin: 2%;
+  height: 20%;
   width: 100%;
 }

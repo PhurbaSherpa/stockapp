@@ -4,19 +4,36 @@ import { addStock } from "../store/portfolio";
 
 const BuySellBox = props => {
   return (
-    <form id="buy-sell-form" onSubmit={props.handleSubmit}>
-      <div>
-        <input placeholder="Ticker Symbol" name="symbol" type="text" />
+    <div id="buy-sell-container">
+      <div id="stock-info">
+        <div id="stock-latestPrice">Latest Price: $1000</div>
+        <div id="stock-openPrice">Today's Open Price: $2000</div>
       </div>
-      <div>
-        <input placeholder="Quantity" name="quantity" type="number" />
-      </div>
-      <button id="auth-button" type="submit">
-        BUY
-      </button>
-    </form>
+      <form id="buy-sell-form" onSubmit={props.handleSubmit}>
+        <input
+          className="buy-sell-box"
+          placeholder="Ticker Symbol"
+          name="symbol"
+          type="text"
+        />
+        <input
+          className="buy-sell-box"
+          placeholder="Quantity"
+          name="quantity"
+          type="number"
+        />
+        <button onClick={() => {}} className="buy-sell-box">
+          Search
+        </button>
+        <button className="buy-sell-box" type="submit">
+          BUY
+        </button>
+      </form>
+    </div>
   );
 };
+
+const mapStateToProps = state => {};
 
 const mapDispatchToProps = dispatch => {
   return {

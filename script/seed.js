@@ -40,6 +40,13 @@ async function seed() {
     }),
     Transaction.create({
       userId: 1,
+      action: "BUY",
+      symbol: "TSLA",
+      price: 184.02,
+      shares: 10
+    }),
+    Transaction.create({
+      userId: 1,
       action: "SELL",
       symbol: "AAPL",
       price: 335.19,
@@ -51,6 +58,13 @@ async function seed() {
       symbol: "MSFT",
       price: 194.02,
       shares: 5
+    }),
+    Transaction.create({
+      userId: 1,
+      action: "SELL",
+      symbol: "TSLA",
+      price: 184.02,
+      shares: 6
     })
   ]);
 
@@ -67,6 +81,13 @@ async function seed() {
       symbol: "MSFT",
       totalShares: 5,
       totalValue: 920.1,
+      status: "NEGATIVE"
+    }),
+    Stock.create({
+      userId: 1,
+      symbol: "TSLA",
+      totalShares: 4,
+      totalValue: 3192,
       status: "NEGATIVE"
     })
   ]);
