@@ -7,11 +7,7 @@ import BuySellBox from "./buysellbox";
 const HomePortfolio = props => {
   useEffect(() => {
     fetchData();
-    let symbols = props.stocks
-      .map(stock => {
-        return stock.symbol;
-      })
-      .join(",");
+    let symbols = props.stocks;
     if (props.marketStatus === "open") {
       let interval = setInterval(() => {
         if (props.marketStatus === "closed") {
@@ -60,7 +56,7 @@ const HomePortfolio = props => {
 const mapStateToProps = state => {
   return {
     stocks: state.portfolio.stocks,
-    portfolioValue: state.portfolio.totalValue,
+    portfolioValue: state.portfolio.portfolioValue,
     balance: state.user.balance,
     marketStatus: state.marketStatus
   };

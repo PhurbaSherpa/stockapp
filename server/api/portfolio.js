@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { Stock } = require("../db/models");
+const { Stock, Transaction } = require("../db/models");
 module.exports = router;
 
 router.get("/", async (req, res, next) => {
@@ -18,7 +18,74 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-router.put("/", async (req, res, next) => {
+router.post("/", async (req, res, next) => {
+  let { stock, quantity } = req.body;
+  try {
+    let newTransaction = await Transaction.create({
+      action: "BUY",
+      symbol: stock.symbol,
+      price: +stock.latestPrice,
+      shares: +quantity
+    });
+    if (!newTransaction) res.sendStatus(400);
+    else {
+      let total = +stock.latestPrice * +quantity;
+      let status;
+      if (stock.latestPrice > stock.openPrice) {
+        status = "POSITIVE";
+      } else if (stock.latestPrice < stock.openPrice) {
+        status = "NEGATIVE";
+      } else status = "EQUAL";
+
+      let newStock = await Stock.create({
+        symbol: stock.symbol,
+        totalValue: total,
+        totalShares: +quantity,
+        userId: req.user.id,
+        status: status
+      });
+
+      if (!newStock) res.sendStatus(400);
+      else {
+        res.json(newStock);
+      }
+    }
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.put("/quantity", async (req, res, next) => {
+  let { stock, quantity } = req.body;
+  try {
+    let newTransaction = await Transaction.create({
+      action: "BUY",
+      symbol: stock.symbol,
+      price: +stock.latestPrice,
+      shares: +quantity
+    });
+    if (!newTransaction) res.sendStatus(400);
+    else {
+      let existingStock = await Stock.findOne({
+        where: {
+          userId: req.user.id,
+          symbol: stock.symbol
+        }
+      });
+      if (existingStock) {
+        existingStock.totalShares += +quantity;
+        let newTotal = +existingStock.totalShares * +stock.latestPrice;
+        existingStock.totalValue = newTotal;
+        await existingStock.save();
+        res.json(existingStock);
+      } else res.sendStatus(400);
+    }
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.put("/currentvalues", async (req, res, next) => {
   let values = req.body.data;
   try {
     const stocks = await Stock.findAll({
@@ -28,7 +95,10 @@ router.put("/", async (req, res, next) => {
     });
     if (stocks) {
       stocks.forEach(async stock => {
-        const latestPrice = values[stock.symbol].quote.latestPrice;
+        let latestPrice = values[stock.symbol].quote.latestPrice;
+        if (!latestPrice) {
+          latestPrice = values[stock.symbol].quote.previousClose;
+        }
         const openPrice = values[stock.symbol].quote.open;
         if (latestPrice > openPrice) {
           stock.status = "POSITIVE";
@@ -43,5 +113,7 @@ router.put("/", async (req, res, next) => {
       let value = await Stock.portfolioValue(req.user.id);
       res.json({ stocks, value });
     }
-  } catch (error) {}
+  } catch (error) {
+    next(error);
+  }
 });
