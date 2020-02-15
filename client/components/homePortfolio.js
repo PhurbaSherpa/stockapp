@@ -33,15 +33,7 @@ const HomePortfolio = props => {
         <div id="portfolio-symbols">
           {props.stocks.length > 0 ? (
             props.stocks.map((stock, index) => {
-              return (
-                <SingleSymbol
-                  key={index}
-                  symbol={stock.symbol}
-                  shares={stock.totalShares}
-                  total={stock.totalValue}
-                  status={stock.status}
-                />
-              );
+              return <SingleSymbol key={index} stock={stock} />;
             })
           ) : (
             <div>No Stocks Owned</div>

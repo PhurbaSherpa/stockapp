@@ -36,6 +36,18 @@ export const addBuyTransaction = (stock, quantity) => async dispatch => {
   }
 };
 
+export const addSellTransaction = (stock, quantity) => async dispatch => {
+  try {
+    const { data } = await axios.post("/api/transaction/sell", {
+      stock,
+      quantity
+    });
+    dispatch(addedTransaction(data));
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 const transactionReducer = (state = transactionsState, action) => {
   switch (action.type) {
     case GET_ALL_TRANSACTIONS:

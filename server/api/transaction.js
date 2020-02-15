@@ -17,6 +17,23 @@ router.get("/", async (req, res, next) => {
   }
 });
 
+router.post("/sell", async (req, res, next) => {
+  let { stock, quantity } = req.body;
+  try {
+    let newTransaction = await Transaction.create({
+      action: "SELL",
+      symbol: stock.symbol,
+      price: +stock.latestPrice,
+      shares: +quantity,
+      userId: req.user.id
+    });
+    if (!newTransaction) res.sendStatus(400);
+    else res.json(newTransaction);
+  } catch (error) {
+    next(error);
+  }
+});
+
 router.post("/buy", async (req, res, next) => {
   let { stock, quantity } = req.body;
   try {
