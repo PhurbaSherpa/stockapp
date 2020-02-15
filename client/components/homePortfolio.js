@@ -1,26 +1,30 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { getPortfolio, getLatestValues, getMarketStatus } from "../store";
+import { getPortfolio, updateCurrentValues, getMarketStatus } from "../store";
 import SingleSymbol from "./singleSymbol";
 import BuySellBox from "./buysellbox";
 
 const HomePortfolio = props => {
   useEffect(() => {
     fetchData();
-    let symbols = props.stocks;
+    let symbols = props.stocks
+      .map(stock => {
+        return stock.symbol;
+      })
+      .join(",");
     if (props.marketStatus === "open") {
       let interval = setInterval(() => {
-        if (props.marketStatus === "closed") {
+        if (props.market === "closed") {
           clearInterval(interval);
         }
-        props.getLatestValues(symbols);
-      }, 60000);
+        props.updateCurrentValues(symbols);
+      }, 5000);
     }
     async function fetchData() {
       await props.getPortfolio();
       await props.getMarketStatus();
     }
-  }, [props.portfolioValue]);
+  }, [props.portfolioValue, props.marketStatus]);
 
   return (
     <div id="home-Conatiner">
@@ -65,7 +69,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     getPortfolio: () => dispatch(getPortfolio()),
-    getLatestValues: symbols => dispatch(getLatestValues(symbols)),
+    updateCurrentValues: symbols => dispatch(updateCurrentValues(symbols)),
     getMarketStatus: () => dispatch(getMarketStatus())
   };
 };

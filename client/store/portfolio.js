@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const GOT_PORTFOLIO = "GOT_PORTFOLIO";
-const GOT_LATEST_VALUES = "GOT_LATEST_VALUES";
+const UPDATE_CURRENT_VALUES = "UPDATE_CURRENT_VALUES";
 const BOUGHT_STOCK = "BOUGHT_STOCK";
 const UPDATE_STOCK = "UPDATE_STOCK";
 
@@ -18,7 +18,7 @@ const gotPortfolio = portfolio => ({
 });
 
 const gotLatestValues = portfolio => ({
-  type: GOT_LATEST_VALUES,
+  type: UPDATE_CURRENT_VALUES,
   portfolio
 });
 
@@ -33,34 +33,55 @@ const updatedStock = stock => ({
 });
 
 export const getPortfolio = () => async dispatch => {
-  const { data } = await axios.get("/api/portfolio");
-  dispatch(gotPortfolio(data));
+  try {
+    const { data } = await axios.get("/api/portfolio");
+    dispatch(gotPortfolio(data));
+  } catch (error) {
+    console.log(error);
+  }
 };
 
-export const getLatestValues = symbols => async dispatch => {
-  symbols = symbols
-    .map(stock => {
-      return stock.symbol;
-    })
-    .join(",");
-  let { data } = await axios.get(
-    `https://cloud.iexapis.com/stable/stock/market/batch?symbols=${symbols}&types=quote&token=${process.env.STOCK_API_TOKEN}`
-  );
-  let resdata = await axios.put("/api/portfolio/currentvalues", { data });
-  dispatch(gotLatestValues(resdata.data));
+export const updateCurrentValues = symbols => async dispatch => {
+  console.log("thesymbols", symbols);
+
+  let res;
+  try {
+    res = await axios.get(
+      `https://cloud.iexapis.com/stable/stock/market/batch?symbols=${symbols}&types=quote&token=${process.env.STOCK_API_TOKEN}`
+    );
+  } catch (error) {
+    return console.log("gettingData", error);
+  }
+
+  try {
+    let { data } = await axios.put("/api/portfolio/currentvalues", {
+      data: res.data
+    });
+    dispatch(gotLatestValues(data));
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export const addStock = (stock, quantity) => async dispatch => {
-  const { data } = await axios.post("/api/portfolio", { stock, quantity });
-  dispatch(boughtStock(data));
+  try {
+    const { data } = await axios.post("/api/portfolio", { stock, quantity });
+    dispatch(boughtStock(data));
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export const addShares = (stock, quantity) => async dispatch => {
-  const { data } = await axios.put("/api/portfolio/quantity", {
-    stock,
-    quantity
-  });
-  dispatch(updatedStock(data));
+  try {
+    const { data } = await axios.put("/api/portfolio/quantity", {
+      stock,
+      quantity
+    });
+    dispatch(updatedStock(data));
+  } catch (error) {
+    console.log(errro);
+  }
 };
 
 const portfolioReducer = (state = portfolioState, action) => {
@@ -70,7 +91,7 @@ const portfolioReducer = (state = portfolioState, action) => {
         stocks: action.portfolio.stocks,
         portfolioValue: action.portfolio.value
       };
-    case GOT_LATEST_VALUES:
+    case UPDATE_CURRENT_VALUES:
       return {
         stocks: action.portfolio.stocks,
         portfolioValue: action.portfolio.value

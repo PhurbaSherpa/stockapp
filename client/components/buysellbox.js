@@ -13,7 +13,8 @@ const BuySellBox = props => {
     addStock,
     ownedSymbols,
     addShares,
-    decreaseBalance
+    decreaseBalance,
+    balance
   } = props;
 
   return (
