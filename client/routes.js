@@ -15,7 +15,7 @@ const Routes = props => {
       <Route path="/signup" component={Signup} />
       {isLoggedIn && (
         <Switch>
-          <Route path="/home" component={Home} />
+          <Route path="/portfolio" component={Home} />
           <Route path="/transactions" component={Transaction} />
         </Switch>
       )}

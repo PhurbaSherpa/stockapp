@@ -1,14 +1,23 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { getAllTransactions } from "../store";
+import SingleTransaction from "./singleTransaction";
 
 const Transactions = props => {
   useEffect(() => {
     props.getAllTransactions();
   }, [props.transactions.length]);
 
-  console.log(props.transactions);
-  return <div></div>;
+  return (
+    <div id="transactions-container">
+      <h2>Transactions</h2>
+      <div>
+        {props.transactions.map((transaction, index) => {
+          return <SingleTransaction key={index} transaction={transaction} />;
+        })}
+      </div>
+    </div>
+  );
 };
 
 const mapStateToProps = state => ({

@@ -44,7 +44,7 @@ export const auth = (email, password, method) => async dispatch => {
 
   try {
     dispatch(gotUser(res.data));
-    history.push("/home");
+    history.push("/portfolio");
   } catch (dispatchOrHistoryErr) {
     console.error(dispatchOrHistoryErr);
   }
@@ -60,7 +60,7 @@ export const logIn = (email, password) => async dispatch => {
 
   try {
     dispatch(gotUser(res.data));
-    history.push("/home");
+    history.push("/portfolio");
   } catch (dispatchOrHistoryErr) {
     console.error(dispatchOrHistoryErr);
   }
@@ -86,7 +86,7 @@ export const signUp = (
 
   try {
     dispatch(gotUser(res.data));
-    history.push("/home");
+    history.push("/portfolio");
   } catch (dispatchOrHistoryErr) {
     console.error(dispatchOrHistoryErr);
   }
