@@ -73,8 +73,11 @@ router.put("/quantity", async (req, res, next) => {
       }
     });
     if (existingStock) {
-      existingStock.totalShares += +quantity;
-      let newTotal = +existingStock.totalShares * +stock.latestPrice;
+      if (!stock.latestPrice) {
+        stock.latestPrice = +stock.totalValue / +stock.totalShares;
+      }
+      existingStock.totalShares += quantity;
+      let newTotal = existingStock.totalShares * +stock.latestPrice;
       existingStock.totalValue = newTotal;
       await existingStock.save();
       res.json(existingStock);

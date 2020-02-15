@@ -89,7 +89,7 @@ export const deleteStock = symbol => async dispatch => {
   }
 };
 
-export const addShares = (stock, quantity) => async dispatch => {
+export const updateShares = (stock, quantity) => async dispatch => {
   try {
     const { data } = await axios.put("/api/portfolio/quantity", {
       stock,

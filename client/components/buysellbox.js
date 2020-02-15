@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import {
   addStock,
   getStockInfo,
-  addShares,
+  updateShares,
   decreaseBalance,
   addBuyTransaction
 } from "../store";
@@ -18,7 +18,7 @@ const BuySellBox = props => {
     searchError,
     addStock,
     ownedSymbols,
-    addShares,
+    updateShares,
     decreaseBalance,
     balance,
     addBuyTransaction
@@ -68,7 +68,7 @@ const BuySellBox = props => {
           onClick={() => {
             if (quantity > 0) {
               if (ownedSymbols.includes(stock.symbol)) {
-                addShares(stock, quantity);
+                updateShares(stock, quantity);
               } else {
                 addStock(stock, quantity);
               }
@@ -95,7 +95,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => {
   return {
     addStock: (stock, quantity) => dispatch(addStock(stock, quantity)),
-    addShares: (stock, quantity) => dispatch(addShares(stock, quantity)),
+    updateShares: (stock, quantity) => dispatch(updateShares(stock, quantity)),
     getStockInfo: symbol => dispatch(getStockInfo(symbol)),
     decreaseBalance: (price, quantity) =>
       dispatch(decreaseBalance(price, quantity)),
