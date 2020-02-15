@@ -45,6 +45,23 @@ router.post("/", async (req, res, next) => {
     next(error);
   }
 });
+router.delete("/:symbol", async (req, res, next) => {
+  try {
+    let { symbol } = req.params;
+    let toBeDestroyed = await Stock.findOne({
+      where: {
+        userId: req.user.id,
+        symbol: symbol
+      }
+    });
+    if (!toBeDestroyed) {
+      res.sendStatus(400);
+    } else {
+      await toBeDestroyed.destroy();
+      res.json(toBeDestroyed);
+    }
+  } catch (error) {}
+});
 
 router.put("/quantity", async (req, res, next) => {
   let { stock, quantity } = req.body;

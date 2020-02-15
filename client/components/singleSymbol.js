@@ -1,8 +1,15 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
+import { deleteStock } from "../store";
 
 const SingleSymbol = props => {
-  const { increaseBalance, addSellTransaction, stock } = props;
+  const {
+    increaseBalance,
+    addSellTransaction,
+    stock,
+    deleteStock,
+    removeShares
+  } = props;
   const { symbol, totalShares, totalValue, status } = stock;
   const price = totalValue / totalShares;
   const [sharesToSell, setSharesToSell] = useState(0);
@@ -24,13 +31,14 @@ const SingleSymbol = props => {
           id="sellButton"
           type="button"
           onClick={() => {
-            if (sharesToSell === totalShares) {
-              deleteStock(stock, sharesToSell);
-            } else {
-              removeShares(stock, sharesToSell);
-            }
-            increaseBalance(price, sharesToSell);
-            addSellTransaction(stock, sharesToSell);
+            console.log(sharesToSell, totalShares);
+            // if (sharesToSell === totalShares) {
+            deleteStock(symbol);
+            // } else {
+            //   removeShares(stock, sharesToSell);
+            // }
+            // increaseBalance(price, sharesToSell);
+            // addSellTransaction(stock, sharesToSell);
           }}
         >
           SELL
@@ -52,7 +60,8 @@ const mapDispatchToProps = dispatch => ({
   increaseBalance: (price, quantity) =>
     dispatch(increaseBalance(price, quantity)),
   addSellTransaction: (stock, quantity) =>
-    dispatch(addSellTransaction(stock, quantity))
+    dispatch(addSellTransaction(stock, quantity)),
+  deleteStock: symbol => dispatch(deleteStock(symbol))
 });
 
 export default connect(null, mapDispatchToProps)(SingleSymbol);
