@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { Stock, Transaction } = require("../db/models");
+const { Stock } = require("../db/models");
 module.exports = router;
 
 router.get("/", async (req, res, next) => {
@@ -21,34 +21,25 @@ router.get("/", async (req, res, next) => {
 router.post("/", async (req, res, next) => {
   let { stock, quantity } = req.body;
   try {
-    let newTransaction = await Transaction.create({
-      action: "BUY",
+    let total = +stock.latestPrice * +quantity;
+    let status;
+    if (stock.latestPrice > stock.openPrice) {
+      status = "POSITIVE";
+    } else if (stock.latestPrice < stock.openPrice) {
+      status = "NEGATIVE";
+    } else status = "EQUAL";
+
+    let newStock = await Stock.create({
       symbol: stock.symbol,
-      price: +stock.latestPrice,
-      shares: +quantity
+      totalValue: total,
+      totalShares: +quantity,
+      userId: req.user.id,
+      status: status
     });
-    if (!newTransaction) res.sendStatus(400);
+
+    if (!newStock) res.sendStatus(400);
     else {
-      let total = +stock.latestPrice * +quantity;
-      let status;
-      if (stock.latestPrice > stock.openPrice) {
-        status = "POSITIVE";
-      } else if (stock.latestPrice < stock.openPrice) {
-        status = "NEGATIVE";
-      } else status = "EQUAL";
-
-      let newStock = await Stock.create({
-        symbol: stock.symbol,
-        totalValue: total,
-        totalShares: +quantity,
-        userId: req.user.id,
-        status: status
-      });
-
-      if (!newStock) res.sendStatus(400);
-      else {
-        res.json(newStock);
-      }
+      res.json(newStock);
     }
   } catch (error) {
     next(error);
@@ -58,28 +49,19 @@ router.post("/", async (req, res, next) => {
 router.put("/quantity", async (req, res, next) => {
   let { stock, quantity } = req.body;
   try {
-    let newTransaction = await Transaction.create({
-      action: "BUY",
-      symbol: stock.symbol,
-      price: +stock.latestPrice,
-      shares: +quantity
+    let existingStock = await Stock.findOne({
+      where: {
+        userId: req.user.id,
+        symbol: stock.symbol
+      }
     });
-    if (!newTransaction) res.sendStatus(400);
-    else {
-      let existingStock = await Stock.findOne({
-        where: {
-          userId: req.user.id,
-          symbol: stock.symbol
-        }
-      });
-      if (existingStock) {
-        existingStock.totalShares += +quantity;
-        let newTotal = +existingStock.totalShares * +stock.latestPrice;
-        existingStock.totalValue = newTotal;
-        await existingStock.save();
-        res.json(existingStock);
-      } else res.sendStatus(400);
-    }
+    if (existingStock) {
+      existingStock.totalShares += +quantity;
+      let newTotal = +existingStock.totalShares * +stock.latestPrice;
+      existingStock.totalValue = newTotal;
+      await existingStock.save();
+      res.json(existingStock);
+    } else res.sendStatus(400);
   } catch (error) {
     next(error);
   }

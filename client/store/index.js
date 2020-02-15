@@ -6,8 +6,15 @@ import user from "./user";
 import portfolio from "./portfolio";
 import marketStatus from "./marketStatus";
 import stockToBuy from "./stockToBuy";
+import transactions from "./transaction";
 
-const reducer = combineReducers({ user, portfolio, marketStatus, stockToBuy });
+const reducer = combineReducers({
+  user,
+  portfolio,
+  marketStatus,
+  stockToBuy,
+  transactions
+});
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({ collapsed: true }))
 );
@@ -18,3 +25,4 @@ export * from "./user";
 export * from "./portfolio";
 export * from "./marketStatus";
 export * from "./stockToBuy";
+export * from "./transaction";

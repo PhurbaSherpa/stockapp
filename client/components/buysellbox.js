@@ -1,6 +1,12 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import { addStock, getStockInfo, addShares, decreaseBalance } from "../store";
+import {
+  addStock,
+  getStockInfo,
+  addShares,
+  decreaseBalance,
+  addBuyTransaction
+} from "../store";
 
 const BuySellBox = props => {
   const [tickerSymbol, setTickerSymbol] = useState("");
@@ -14,7 +20,8 @@ const BuySellBox = props => {
     ownedSymbols,
     addShares,
     decreaseBalance,
-    balance
+    balance,
+    addBuyTransaction
   } = props;
 
   return (
@@ -66,6 +73,7 @@ const BuySellBox = props => {
                 addStock(stock, quantity);
               }
               decreaseBalance(stock.latestPrice, quantity);
+              addBuyTransaction(stock, quantity);
             }
           }}
         >
@@ -90,7 +98,9 @@ const mapDispatchToProps = dispatch => {
     addShares: (stock, quantity) => dispatch(addShares(stock, quantity)),
     getStockInfo: symbol => dispatch(getStockInfo(symbol)),
     decreaseBalance: (price, quantity) =>
-      dispatch(decreaseBalance(price, quantity))
+      dispatch(decreaseBalance(price, quantity)),
+    addBuyTransaction: (stock, quantity) =>
+      dispatch(addBuyTransaction(stock, quantity))
   };
 };
 

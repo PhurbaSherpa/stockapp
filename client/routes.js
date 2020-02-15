@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { withRouter, Route, Switch } from "react-router-dom";
-import { Login, Signup, Home } from "./components";
+import { Login, Signup, Home, Transaction } from "./components";
 import { me } from "./store";
 
 const Routes = props => {
@@ -16,6 +16,7 @@ const Routes = props => {
       {isLoggedIn && (
         <Switch>
           <Route path="/home" component={Home} />
+          <Route path="/transactions" component={Transaction} />
         </Switch>
       )}
       <Route component={Login} />
