@@ -8,7 +8,7 @@ import {
   addBuyTransaction
 } from "../store";
 
-const BuySellBox = props => {
+const BuyBox = props => {
   const [tickerSymbol, setTickerSymbol] = useState("");
   const [quantity, setQuantity] = useState(1);
   const {
@@ -104,4 +104,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(BuySellBox);
+export default connect(mapStateToProps, mapDispatchToProps)(BuyBox);

@@ -7,7 +7,7 @@ import {
   me
 } from "../store";
 import SingleSymbol from "./singleSymbol";
-import BuySellBox from "./buysellbox";
+import BuyBox from "./buyBox";
 
 const HomePortfolio = props => {
   useEffect(() => {
@@ -48,7 +48,7 @@ const HomePortfolio = props => {
         <div id="vertical-line"></div>
         <div id="buy-sell-container">
           <h2>Cash ${props.balance}</h2>
-          <BuySellBox />
+          <BuyBox />
         </div>
       </div>
     </div>

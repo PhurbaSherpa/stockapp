@@ -7,14 +7,21 @@ const User = db.define("user", {
     type: Sequelize.STRING,
     allowNull: false,
     validate: {
-      notEmpty: true
+      is: {
+        args: /^[a-z]+(['-][a-z]*)*$/i,
+        msg: "First name can contain only letters special characters(' and -)"
+      }
     }
   },
   lastName: {
     type: Sequelize.STRING,
     allowNull: false,
     validate: {
-      notEmpty: true
+      notEmpty: true,
+      is: {
+        args: /^[a-z]+(['-][a-z]*)*$/i,
+        msg: "Last name can contain only letters special characters(' and -)"
+      }
     }
   },
   email: {
@@ -22,13 +29,23 @@ const User = db.define("user", {
     unique: true,
     allowNull: false,
     validate: {
-      isEmail: true
+      isEmail: {
+        args: [true],
+        msg: "Must be a valid email"
+      }
     }
   },
   password: {
     type: Sequelize.STRING,
     get() {
       return () => this.getDataValue("password");
+    },
+    validate: {
+      is: {
+        args: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$^+=!*()@%&]).{8,20}$/,
+        msg:
+          "Must contain at least a number, uppercase, lowercase, and a special character w/ a length of 8-21"
+      }
     }
   },
   balance: {

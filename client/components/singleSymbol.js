@@ -32,7 +32,7 @@ const SingleSymbol = props => {
       <div style={{ color: color }}>{totalValue}</div>
       <div>
         <button
-          disabled={sharesToSell > totalShares || sharesToSell < 0}
+          disabled={sharesToSell > totalShares || sharesToSell <= 0}
           id="sellButton"
           type="button"
           onClick={() => {
