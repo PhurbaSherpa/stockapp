@@ -48,15 +48,13 @@ export const getPortfolio = () => async dispatch => {
 };
 
 export const updateCurrentValues = symbols => async dispatch => {
-  console.log("thesymbols", symbols);
-
   let res;
   try {
     res = await axios.get(
       `https://cloud.iexapis.com/stable/stock/market/batch?symbols=${symbols}&types=quote&token=${process.env.STOCK_API_TOKEN}`
     );
   } catch (error) {
-    return console.log("gettingData", error);
+    return console.log(error);
   }
 
   try {
@@ -80,9 +78,7 @@ export const addStock = (stock, quantity) => async dispatch => {
 
 export const deleteStock = symbol => async dispatch => {
   try {
-    console.log(symbol);
     const { data } = await axios.delete(`/api/portfolio/${symbol}`);
-    console.log("hi", data);
     dispatch(deletedStock(data));
   } catch (error) {
     console.log(error);

@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import { deleteStock, updateShares } from "../store";
+import {
+  deleteStock,
+  updateShares,
+  increaseBalance,
+  addSellTransaction
+} from "../store";
 
 const SingleSymbol = props => {
   const {
@@ -11,7 +16,7 @@ const SingleSymbol = props => {
     updateShares
   } = props;
   const { symbol, totalShares, totalValue, status } = stock;
-  const price = totalValue / totalShares;
+  const price = +totalValue / +totalShares;
   const [sharesToSell, setSharesToSell] = useState(0);
   let color = "grey";
   if (status === "POSITIVE") {
@@ -31,14 +36,13 @@ const SingleSymbol = props => {
           id="sellButton"
           type="button"
           onClick={() => {
-            console.log(sharesToSell, totalShares);
-            if (sharesToSell === totalShares) {
+            if (+sharesToSell === totalShares) {
               deleteStock(symbol);
             } else {
               let negativeValue = 0 - sharesToSell;
               updateShares(stock, negativeValue);
             }
-            // increaseBalance(price, sharesToSell);
+            increaseBalance(price, sharesToSell);
             addSellTransaction(stock, sharesToSell);
           }}
         >

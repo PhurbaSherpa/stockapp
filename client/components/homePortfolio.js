@@ -1,6 +1,11 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { getPortfolio, updateCurrentValues, getMarketStatus } from "../store";
+import {
+  getPortfolio,
+  updateCurrentValues,
+  getMarketStatus,
+  me
+} from "../store";
 import SingleSymbol from "./singleSymbol";
 import BuySellBox from "./buysellbox";
 
@@ -23,12 +28,13 @@ const HomePortfolio = props => {
     async function fetchData() {
       await props.getPortfolio();
       await props.getMarketStatus();
+      await props.me();
     }
   }, [props.portfolioValue, props.marketStatus]);
 
   return (
     <div id="home-Conatiner">
-      <h2>Portfolio {props.portfolioValue}</h2>
+      <h2>Portfolio: ${props.portfolioValue}</h2>
       <div id="symbol-buy-container">
         <div id="portfolio-symbols">
           {props.stocks.length > 0 ? (
@@ -62,7 +68,8 @@ const mapDispatchToProps = dispatch => {
   return {
     getPortfolio: () => dispatch(getPortfolio()),
     updateCurrentValues: symbols => dispatch(updateCurrentValues(symbols)),
-    getMarketStatus: () => dispatch(getMarketStatus())
+    getMarketStatus: () => dispatch(getMarketStatus()),
+    me: () => dispatch(me())
   };
 };
 

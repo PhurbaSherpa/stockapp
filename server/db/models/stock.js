@@ -32,7 +32,7 @@ Stock.portfolioValue = async function(id) {
       value += +stock.dataValues.totalValue;
     });
   }
-  return value;
+  return +value.toFixed(2);
 };
 
 module.exports = Stock;

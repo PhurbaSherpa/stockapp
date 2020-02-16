@@ -23,7 +23,7 @@ router.post("/sell", async (req, res, next) => {
     let newTransaction = await Transaction.create({
       action: "SELL",
       symbol: stock.symbol,
-      price: +stock.latestPrice,
+      price: +stock.totalValue / +stock.totalShares,
       shares: +quantity,
       userId: req.user.id
     });

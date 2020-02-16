@@ -4,22 +4,34 @@ import history from "../history";
 const GOT_USER = "GOT_USER";
 const REMOVE_USER = "REMOVE_USER";
 const DECREASE_BALANCE = "DECREASE_BALANCE";
+const INCREASE_BALANCE = "INCREASE_BALANCE";
 
 const defaultUser = {};
 
 const gotUser = user => ({ type: GOT_USER, user });
 const removeUser = () => ({ type: REMOVE_USER });
 const decreasedBalance = user => ({ type: DECREASE_BALANCE, user });
+const increasedBalance = user => ({ type: INCREASE_BALANCE, user });
 
 export const decreaseBalance = (price, quantity) => async dispatch => {
   try {
-    console.log("dddd");
     const { data } = await axios.put("/api/balance/decrease", {
       price,
       quantity
     });
-    console.log(data);
     dispatch(decreasedBalance(data));
+  } catch (error) {
+    console.log(err);
+  }
+};
+
+export const increaseBalance = (price, quantity) => async dispatch => {
+  try {
+    const { data } = await axios.put("/api/balance/increase", {
+      price,
+      quantity
+    });
+    dispatch(increasedBalance(data));
   } catch (error) {
     console.log(err);
   }
@@ -109,7 +121,9 @@ export default function(state = defaultUser, action) {
     case REMOVE_USER:
       return defaultUser;
     case DECREASE_BALANCE:
-      return { ...state, balance: action.user.balance };
+      return { ...state };
+    case INCREASE_BALANCE:
+      return { ...state };
     default:
       return state;
   }
