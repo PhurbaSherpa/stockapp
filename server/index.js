@@ -9,6 +9,7 @@ const db = require("./db");
 const sessionStore = new SequelizeStore({ db });
 const PORT = process.env.PORT || 8080;
 const socketio = require("socket.io");
+const { checkUser } = require("./utils");
 const app = express();
 module.exports = app;
 
@@ -53,7 +54,9 @@ const createApp = () => {
 
   // auth and api routes
   app.use("/auth", require("./auth"));
-  app.use("/api", require("./api"));
+
+  //add middleware checkUser to make sure only loggedin users have acess to these api routes
+  app.use("/api", checkUser, require("./api"));
 
   // static file-serving middleware
   app.use(express.static(path.join(__dirname, "..", "public")));
