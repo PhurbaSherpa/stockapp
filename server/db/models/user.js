@@ -9,7 +9,8 @@ const User = db.define("user", {
     validate: {
       is: {
         args: /^[a-z]+(['-][a-z]*)*$/i,
-        msg: "First name can contain only letters special characters(' and -)"
+        msg:
+          "First name can contain only letters and special characters(' and -)"
       }
     }
   },
@@ -20,7 +21,8 @@ const User = db.define("user", {
       notEmpty: true,
       is: {
         args: /^[a-z]+(['-][a-z]*)*$/i,
-        msg: "Last name can contain only letters special characters(' and -)"
+        msg:
+          "Last name can contain only letters and special characters(' and -)"
       }
     }
   },
@@ -50,7 +52,8 @@ const User = db.define("user", {
   },
   balance: {
     type: Sequelize.DECIMAL(13, 2),
-    defaultValue: 5000
+    defaultValue: 5000,
+    min: 0
   },
   salt: {
     type: Sequelize.STRING,

@@ -32,22 +32,31 @@ describe("User Model", () => {
   // signup tests
   describe("Signup Tests", () => {
     let passwords = [
-      "AbC123*!",
-      "Abc123*",
-      "abc123*!abc123*!abc123*!abc123*!",
-      "abc123*!",
-      "ABC123*!",
-      "abcABC*!",
-      "abc123A1"
+      "AbC123*!"
+      // "Abc123*",
+      // "abc123*!abc123*!abc123*!abc123*!",
+      // "abc123*!",
+      // "ABC123*!",
+      // "abcABC*!",
+      // "abc123A1"
     ];
     let firstNames = [
-      "Cody",
-      "phurba",
-      "jay-z",
-      "D'lilah",
-      "john smith",
-      "tyler1",
-      "Love<3:)"
+      "D'Lilah-Jean"
+      // "phurba",
+      // "jay-z",
+      // "D'lilah",
+      // "john smith",
+      // "tyler1",
+      // "Love<3:)"
+    ];
+
+    let lastNames = [
+      "Smith-Jone's"
+      // "Kai-sa",
+      // "O'connor",
+      // "Dominic!",
+      // "sOlar",
+      // "0'neil"
     ];
 
     describe("Signup tests with passwords", () => {
@@ -110,7 +119,7 @@ describe("User Model", () => {
                 email: "cody@email.com",
                 password: "AbC123*!"
               });
-              expect(firstNameTestUser.dataValues.name).to.be.equal(
+              expect(firstNameTestUser.dataValues.firstName).to.be.equal(
                 currentTestFirstName
               );
             });
@@ -135,5 +144,58 @@ describe("User Model", () => {
         }); //end of describe (`Tests with fristName ${currentTestFirstName} `)
       }
     }); //end of ("Signup tests with firstnames")
+
+    describe("Signup tests with lastnames", () => {
+      for (let i = 0; i < lastNames.length; i++) {
+        let lastNameTestUser;
+        let currentTestLastName = lastNames[i];
+
+        describe(`Tests with lastName ${currentTestLastName}`, () => {
+          describe(`Signup outcome with ${lastNames[i]}`, () => {
+            it(`is a successful signup`, async () => {
+              lastNameTestUser = await User.create({
+                firstName: "Cody",
+                lastName: currentTestLastName,
+                email: "cody@email.com",
+                password: "AbC123*!"
+              });
+              expect(lastNameTestUser.dataValues.lastName).to.be.equal(
+                currentTestLastName
+              );
+            });
+          }); // end of describe(`Signup outcome with ${lastNames[i]`)
+
+          describe(`valid lastName tests`, () => {
+            it(`must contain no numbers`, () => {
+              expect(/[0-9]/.test(currentTestLastName)).to.be.equal(false);
+            });
+            it(`must contain a letter`, () => {
+              expect(/[a-zA-Z]/.test(currentTestLastName)).to.be.equal(true);
+            });
+            it(`must contain no special characters except ' and -`, () => {
+              expect(/[^a-zA-Z0-9-']/.test(currentTestLastName)).to.be.equal(
+                false
+              );
+            });
+            it(`must start with a letter`, () => {
+              expect(/^[a-zA-z]/.test(currentTestLastName)).to.be.equal(true);
+            });
+          });
+        }); //end of describe (`Tests with fristName ${currentTestLastName} `)
+      }
+    }); //end of ("Signup tests with lastnames")
+
+    describe(`Signup defaults balance to $5000`, () => {
+      it(`must be an amount of $5000`, async () => {
+        let cody = await User.create({
+          firstName: "Cody",
+          lastName: "Sun",
+          email: "cody@email.com",
+          password: "AbC123*!"
+        });
+        console.log(cody);
+        expect(cody.dataValues.balance).to.be.equal("5000.00");
+      });
+    });
   }); // end of describe("Signup Tests")
 }); // end of describe("User Model")
