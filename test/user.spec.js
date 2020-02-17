@@ -90,7 +90,7 @@ describe("User Model", () => {
       });
     }); // end of describe("Valid firstName tests")
 
-    describe(`valid lastName tests`, () => {
+    describe(`Valid lastName tests`, () => {
       it(`must contain no numbers`, () => {
         expect(/[0-9]/.test(currentTestLastName)).to.be.equal(false);
       });
