@@ -2,7 +2,7 @@ const { expect } = require("chai");
 const db = require("../server/db/index");
 const User = db.model("user");
 
-describe("User Model", () => {
+xdescribe("User Model", () => {
   beforeEach(() => {
     return db.sync({ force: true });
   });
@@ -193,7 +193,6 @@ describe("User Model", () => {
           email: "cody@email.com",
           password: "AbC123*!"
         });
-        console.log(cody);
         expect(cody.dataValues.balance).to.be.equal("5000.00");
       });
     });
