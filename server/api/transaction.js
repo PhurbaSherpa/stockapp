@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { Transaction } = require("../db/models");
+const { Transaction, Stock } = require("../db/models");
 module.exports = router;
 
 router.get("/", async (req, res, next) => {
@@ -19,16 +19,21 @@ router.get("/", async (req, res, next) => {
 
 router.post("/sell", async (req, res, next) => {
   let { stock, quantity } = req.body;
+  let price = (+stock.totalValue / +stock.totalShares).toFixed(2);
   try {
-    let newTransaction = await Transaction.create({
-      action: "SELL",
-      symbol: stock.symbol,
-      price: +stock.totalValue / +stock.totalShares,
-      shares: +quantity,
-      userId: req.user.id
-    });
-    if (!newTransaction) res.sendStatus(400);
-    else res.json(newTransaction);
+    if (stock.totalShares < quantity) {
+      res.sendStatus(400);
+    } else {
+      let newTransaction = await Transaction.create({
+        action: "SELL",
+        symbol: stock.symbol,
+        price: +price,
+        shares: quantity,
+        userId: req.user.id
+      });
+      if (!newTransaction) res.sendStatus(400);
+      else res.json(newTransaction);
+    }
   } catch (error) {
     next(error);
   }
@@ -36,16 +41,21 @@ router.post("/sell", async (req, res, next) => {
 
 router.post("/buy", async (req, res, next) => {
   let { stock, quantity } = req.body;
+  let price = stock.latestPrice.toFixed(2);
   try {
-    let newTransaction = await Transaction.create({
-      action: "BUY",
-      symbol: stock.symbol,
-      price: +stock.latestPrice,
-      shares: +quantity,
-      userId: req.user.id
-    });
-    if (!newTransaction) res.sendStatus(400);
-    else res.json(newTransaction);
+    if (req.user.balance < price * quantity) {
+      res.sendStatus(400);
+    } else {
+      let newTransaction = await Transaction.create({
+        action: "BUY",
+        symbol: stock.symbol,
+        price: +price,
+        shares: quantity,
+        userId: req.user.id
+      });
+      if (!newTransaction) res.sendStatus(400);
+      else res.json(newTransaction);
+    }
   } catch (error) {
     next(error);
   }

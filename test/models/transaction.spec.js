@@ -1,6 +1,6 @@
 const { expect } = require("chai");
-const db = require("../server/db/index");
-const Transaction = db.model("transaction");
+const db = require("../../server/db/index");
+const { Transaction, User } = require("../../server/db/models");
 
 describe("Transaction Model", () => {
   beforeEach(() => {
@@ -8,13 +8,21 @@ describe("Transaction Model", () => {
   });
 
   describe("Transactions Test", () => {
+    let userObj = {
+      firstName: "Cody",
+      lastName: "Sun",
+      email: "cody@email.com",
+      password: "AbC123*!"
+    };
     let transaction;
     beforeEach(async () => {
+      await User.create(userObj);
       transaction = await Transaction.create({
         action: "BUY",
         symbol: "MSFT",
         price: 1000,
-        shares: 2
+        shares: 2,
+        userId: 1
       });
     });
 
