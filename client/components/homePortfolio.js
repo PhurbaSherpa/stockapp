@@ -1,36 +1,34 @@
-import React, { useEffect } from "react";
-import { connect } from "react-redux";
-import {
-  getPortfolio,
-  updateCurrentValues,
-  getMarketStatus,
-  me
-} from "../store";
-import SingleSymbol from "./singleSymbol";
-import BuyBox from "./buyBox";
+import React, {useEffect} from 'react'
+import {connect} from 'react-redux'
+import {getPortfolio, updateCurrentValues, getMarketStatus, me} from '../store'
+import SingleSymbol from './singleSymbol'
+import BuyBox from './buyBox'
 
 const HomePortfolio = props => {
-  useEffect(() => {
-    fetchData();
-    let symbols = props.stocks
-      .map(stock => {
-        return stock.symbol;
-      })
-      .join(",");
-    if (props.marketStatus === "open") {
+  useEffect(
+    () => {
+      fetchData()
+      let symbols = props.stocks
+        .map(stock => {
+          return stock.symbol
+        })
+        .join(',')
+
       let interval = setInterval(() => {
-        if (props.market === "closed") {
-          clearInterval(interval);
+        if (props.marketStatus === 'closed' || !props.isLoggedIn) {
+          clearInterval(interval)
         }
-        props.updateCurrentValues(symbols);
-      }, 5000);
-    }
-    async function fetchData() {
-      await props.getPortfolio();
-      await props.getMarketStatus();
-      await props.me();
-    }
-  }, [props.portfolioValue, props.marketStatus]);
+        props.updateCurrentValues(symbols)
+      }, 5000)
+      async function fetchData() {
+        await props.getPortfolio()
+        await props.getMarketStatus()
+        await props.me()
+      }
+      return () => clearInterval(interval)
+    },
+    [props.portfolioValue, props.marketStatus, props.isLoggedIn]
+  )
 
   return (
     <div id="home-Conatiner">
@@ -39,30 +37,31 @@ const HomePortfolio = props => {
         <div id="portfolio-symbols">
           {props.stocks.length > 0 ? (
             props.stocks.map((stock, index) => {
-              return <SingleSymbol key={index} stock={stock} />;
+              return <SingleSymbol key={index} stock={stock} />
             })
           ) : (
             <div>No Stocks Owned</div>
           )}
         </div>
-        <div id="vertical-line"></div>
+        <div id="vertical-line" />
         <div id="buy-sell-container">
           <h2>Cash ${props.balance}</h2>
           <BuyBox />
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
 const mapStateToProps = state => {
   return {
     stocks: state.portfolio.stocks,
     portfolioValue: state.portfolio.portfolioValue,
     balance: state.user.balance,
-    marketStatus: state.marketStatus
-  };
-};
+    marketStatus: state.marketStatus,
+    isLoggedIn: !!state.user.id
+  }
+}
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -70,7 +69,7 @@ const mapDispatchToProps = dispatch => {
     updateCurrentValues: symbols => dispatch(updateCurrentValues(symbols)),
     getMarketStatus: () => dispatch(getMarketStatus()),
     me: () => dispatch(me())
-  };
-};
+  }
+}
 
-export default connect(mapStateToProps, mapDispatchToProps)(HomePortfolio);
+export default connect(mapStateToProps, mapDispatchToProps)(HomePortfolio)

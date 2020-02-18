@@ -1,82 +1,82 @@
-import axios from "axios";
-import history from "../history";
+import axios from 'axios'
+import history from '../history'
 
-const GOT_USER = "GOT_USER";
-const REMOVE_USER = "REMOVE_USER";
-const DECREASE_BALANCE = "DECREASE_BALANCE";
-const INCREASE_BALANCE = "INCREASE_BALANCE";
+const GOT_USER = 'GOT_USER'
+const REMOVE_USER = 'REMOVE_USER'
+const DECREASE_BALANCE = 'DECREASE_BALANCE'
+const INCREASE_BALANCE = 'INCREASE_BALANCE'
 
-const defaultUser = {};
+const defaultUser = {}
 
-const gotUser = user => ({ type: GOT_USER, user });
-const removeUser = () => ({ type: REMOVE_USER });
-const decreasedBalance = user => ({ type: DECREASE_BALANCE, user });
-const increasedBalance = user => ({ type: INCREASE_BALANCE, user });
+const gotUser = user => ({type: GOT_USER, user})
+const removeUser = () => ({type: REMOVE_USER})
+const decreasedBalance = user => ({type: DECREASE_BALANCE, user})
+const increasedBalance = user => ({type: INCREASE_BALANCE, user})
 
 export const decreaseBalance = (price, quantity) => async dispatch => {
   try {
-    const { data } = await axios.put("/api/balance/decrease", {
+    const {data} = await axios.put('/api/balance/decrease', {
       price,
       quantity
-    });
-    dispatch(decreasedBalance(data));
+    })
+    dispatch(decreasedBalance(data))
   } catch (error) {
-    console.log(err);
+    console.log(err)
   }
-};
+}
 
 export const increaseBalance = (price, quantity) => async dispatch => {
   try {
-    const { data } = await axios.put("/api/balance/increase", {
+    const {data} = await axios.put('/api/balance/increase', {
       price,
       quantity
-    });
-    dispatch(increasedBalance(data));
+    })
+    dispatch(increasedBalance(data))
   } catch (error) {
-    console.log(err);
+    console.log(err)
   }
-};
+}
 
 export const me = () => async dispatch => {
   try {
-    const res = await axios.get("/auth/me");
-    dispatch(gotUser(res.data || defaultUser));
+    const res = await axios.get('/auth/me')
+    dispatch(gotUser(res.data || defaultUser))
   } catch (err) {
-    console.error(err);
+    console.error(err)
   }
-};
+}
 
 export const auth = (email, password, method) => async dispatch => {
-  let res;
+  let res
   try {
-    res = await axios.post(`/auth/${method}`, { email, password });
+    res = await axios.post(`/auth/${method}`, {email, password})
   } catch (authError) {
-    return dispatch(gotUser({ error: authError }));
+    return dispatch(gotUser({error: authError}))
   }
 
   try {
-    dispatch(gotUser(res.data));
-    history.push("/portfolio");
+    dispatch(gotUser(res.data))
+    history.push('/portfolio')
   } catch (dispatchOrHistoryErr) {
-    console.error(dispatchOrHistoryErr);
+    console.error(dispatchOrHistoryErr)
   }
-};
+}
 
 export const logIn = (email, password) => async dispatch => {
-  let res;
+  let res
   try {
-    res = await axios.post(`/auth/login`, { email, password });
+    res = await axios.post(`/auth/login`, {email, password})
   } catch (authError) {
-    return dispatch(gotUser({ error: authError }));
+    return dispatch(gotUser({error: authError}))
   }
 
   try {
-    dispatch(gotUser(res.data));
-    history.push("/portfolio");
+    dispatch(gotUser(res.data))
+    history.push('/portfolio')
   } catch (dispatchOrHistoryErr) {
-    console.error(dispatchOrHistoryErr);
+    console.error(dispatchOrHistoryErr)
   }
-};
+}
 
 export const signUp = (
   email,
@@ -84,47 +84,47 @@ export const signUp = (
   firstName,
   lastName
 ) => async dispatch => {
-  let res;
+  let res
   try {
     res = await axios.post(`/auth/signup`, {
       email,
       password,
       firstName,
       lastName
-    });
+    })
   } catch (authError) {
-    return dispatch(gotUser({ error: authError }));
+    return dispatch(gotUser({error: authError}))
   }
 
   try {
-    dispatch(gotUser(res.data));
-    history.push("/portfolio");
+    dispatch(gotUser(res.data))
+    history.push('/portfolio')
   } catch (dispatchOrHistoryErr) {
-    console.error(dispatchOrHistoryErr);
+    console.error(dispatchOrHistoryErr)
   }
-};
+}
 
 export const logout = () => async dispatch => {
   try {
-    await axios.post("/auth/logout");
-    dispatch(removeUser());
-    history.push("/login");
+    await axios.post('/auth/logout')
+    dispatch(removeUser())
+    history.push('/login')
   } catch (err) {
-    console.error(err);
+    console.error(err)
   }
-};
+}
 
 export default function(state = defaultUser, action) {
   switch (action.type) {
     case GOT_USER:
-      return action.user;
+      return action.user
     case REMOVE_USER:
-      return defaultUser;
+      return defaultUser
     case DECREASE_BALANCE:
-      return { ...state };
+      return {...state}
     case INCREASE_BALANCE:
-      return { ...state };
+      return {...state}
     default:
-      return state;
+      return state
   }
 }
