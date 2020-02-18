@@ -4,12 +4,36 @@
   "description": "Buying and Selling Stocks",
   "main": "index.js",
   "scripts": {
+    "build-client": "webpack",
     "build-client-watch": "webpack -w",
+    "deploy": "script/deploy",
+    "heroku-token": "script/encrypt-heroku-auth-token.js",
+    "lint": "eslint ./ --ignore-path .gitignore",
+    "lint-fix": "npm run lint -- --fix",
+    "prepare": "if [ -d .git ]; then npm-merge-driver install; fi",
+    "prettify": "prettier --write \"**/*.{js,jsx,json,css,scss,md}\"",
+    "postinstall": "touch secrets.js",
+    "seed": "node script/seed.js",
     "start": "node server",
     "start-dev": "NODE_ENV='development' npm run build-client-watch & NODE_ENV='development' npm run start-server",
     "start-server": "nodemon server -e html,js,scss --ignore public --ignore client",
-    "seed": "node script/seed.js",
     "test": "NODE_ENV='test' mocha \"./test/**/*.spec.js\"  --require @babel/polyfill --require @babel/register"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,jsx}": [
+      "prettier --write",
+      "npm run lint-fix",
+      "git add"
+    ],
+    "*.{css,scss,json,md}": [
+      "prettier --write",
+      "git add"
+    ]
   },
   "keywords": [],
   "author": "Phurba Sherpa",
@@ -60,7 +84,6 @@
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.12.1",
     "eslint": "^5.16.0",
-    "eslint-config-fullstack": "^6.0.0",
     "eslint-config-prettier": "^4.3.0",
     "eslint-plugin-react": "^7.12.4",
     "git-url-parse": "^11.1.2",
@@ -75,8 +98,8 @@
     "redux-mock-store": "^1.5.3",
     "simple-git": "^1.121.0",
     "supertest": "^4.0.2",
-    "webpack": "^4.16.4",
-    "webpack-cli": "^3.1.0",
+    "webpack": "^4.41.6",
+    "webpack-cli": "^3.3.11",
     "yaml": "^1.6.0"
   }
 }
