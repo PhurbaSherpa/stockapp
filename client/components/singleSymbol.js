@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-import { connect } from "react-redux";
+import React, {useState} from 'react'
+import {connect} from 'react-redux'
 import {
   deleteStock,
   updateShares,
   increaseBalance,
   addSellTransaction
-} from "../store";
+} from '../store'
 
 const SingleSymbol = props => {
   const {
@@ -14,52 +14,56 @@ const SingleSymbol = props => {
     stock,
     deleteStock,
     updateShares
-  } = props;
-  const { symbol, totalShares, totalValue, status } = stock;
-  const price = +totalValue / +totalShares;
-  const [sharesToSell, setSharesToSell] = useState(0);
-  let color = "grey";
-  if (status === "POSITIVE") {
-    color = "green";
+  } = props
+  const {symbol, totalShares, totalValue, status} = stock
+  const price = +totalValue / +totalShares
+  const [sharesToSell, setSharesToSell] = useState(0)
+  let color = 'grey'
+  if (status === 'POSITIVE') {
+    color = 'green'
   }
-  if (status === "NEGATIVE") {
-    color = "red";
+  if (status === 'NEGATIVE') {
+    color = 'red'
   }
   return (
     <div className="singleSymbol">
-      <div>{symbol}</div>
-      <div>{totalShares}</div>
-      <div style={{ color: color }}>{totalValue}</div>
-      <div>
+      <div className="symbol-info">{symbol}</div>
+      <div className="symbol-info">{totalShares}</div>
+      <div className="symbol-info">{price.toFixed(2)}</div>
+      <div className="symbol-info" style={{color: color}}>
+        {totalValue}
+      </div>
+      <div className="symbol-info">
         <button
           disabled={sharesToSell > totalShares || sharesToSell <= 0}
           id="sellButton"
           type="button"
           onClick={() => {
             if (+sharesToSell === totalShares) {
-              deleteStock(symbol);
+              deleteStock(symbol)
             } else {
-              let negativeValue = 0 - sharesToSell;
-              updateShares(stock, negativeValue);
+              let negativeValue = 0 - sharesToSell
+              updateShares(stock, negativeValue)
             }
-            increaseBalance(price, sharesToSell);
-            addSellTransaction(stock, sharesToSell);
+            increaseBalance(price, sharesToSell)
+            addSellTransaction(stock, sharesToSell)
           }}
         >
           SELL
         </button>
         <input
+          className="symbol-info"
           type="number"
           max={`${totalShares}`}
           min="0"
           onChange={event => {
-            setSharesToSell(event.target.value);
+            setSharesToSell(event.target.value)
           }}
         />
       </div>
     </div>
-  );
-};
+  )
+}
 
 const mapDispatchToProps = dispatch => ({
   increaseBalance: (price, quantity) =>
@@ -68,6 +72,6 @@ const mapDispatchToProps = dispatch => ({
     dispatch(addSellTransaction(stock, quantity)),
   deleteStock: symbol => dispatch(deleteStock(symbol)),
   updateShares: (stock, quantity) => dispatch(updateShares(stock, quantity))
-});
+})
 
-export default connect(null, mapDispatchToProps)(SingleSymbol);
+export default connect(null, mapDispatchToProps)(SingleSymbol)

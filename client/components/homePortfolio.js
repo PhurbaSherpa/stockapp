@@ -1,8 +1,8 @@
 import React, {useEffect} from 'react'
 import {connect} from 'react-redux'
 import {getPortfolio, updateCurrentValues, getMarketStatus, me} from '../store'
-import SingleSymbol from './singleSymbol'
 import BuyBox from './buyBox'
+import OwnedStockList from './ownedStockList'
 
 const HomePortfolio = props => {
   useEffect(
@@ -34,20 +34,9 @@ const HomePortfolio = props => {
     <div id="home-Conatiner">
       <h2>Portfolio: ${props.portfolioValue}</h2>
       <div id="symbol-buy-container">
-        <div id="portfolio-symbols">
-          {props.stocks.length > 0 ? (
-            props.stocks.map((stock, index) => {
-              return <SingleSymbol key={index} stock={stock} />
-            })
-          ) : (
-            <div>No Stocks Owned</div>
-          )}
-        </div>
+        <OwnedStockList stocks={props.stocks} />
         <div id="vertical-line" />
-        <div id="buy-sell-container">
-          <h2>Cash ${props.balance}</h2>
-          <BuyBox />
-        </div>
+        <BuyBox />
       </div>
     </div>
   )

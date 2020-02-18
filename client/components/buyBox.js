@@ -1,16 +1,17 @@
-import React, { useState } from "react";
-import { connect } from "react-redux";
+import React, {useState} from 'react'
+import {connect} from 'react-redux'
 import {
   addStock,
   getStockInfo,
   updateShares,
   decreaseBalance,
   addBuyTransaction
-} from "../store";
+} from '../store'
 
 const BuyBox = props => {
-  const [tickerSymbol, setTickerSymbol] = useState("");
-  const [quantity, setQuantity] = useState(1);
+  const [tickerSymbol, setTickerSymbol] = useState('')
+  const [quantity, setQuantity] = useState(1)
+
   const {
     marketStatus,
     getStockInfo,
@@ -22,45 +23,46 @@ const BuyBox = props => {
     decreaseBalance,
     balance,
     addBuyTransaction
-  } = props;
+  } = props
 
   return (
-    <div id="buy-sell-container">
+    <div id="buy-container">
+      <h2>Cash ${props.balance}</h2>
       <div id="stock-info">
         <div id="marketStatus">Market Status: {marketStatus.toUpperCase()}</div>
         <div>Symbol: {stock.symbol}</div>
         <div id="stock-latestPrice">Latest Price: ${stock.latestPrice}</div>
         <div id="stock-openPrice">Today's Open Price: ${stock.openPrice}</div>
       </div>
-      <form id="buy-sell-form">
+      <form id="buy-form">
         <input
-          className="buy-sell-box"
+          className="buy-box-input"
           placeholder="Ticker Symbol"
           name="symbol"
           type="text"
           onChange={event => {
-            getStockInfo(event.target.value);
-            setTickerSymbol(event.target.value);
+            getStockInfo(event.target.value)
+            setTickerSymbol(event.target.value)
           }}
         />
         <input
-          className="buy-sell-box"
+          className="buy-box-input"
           placeholder="Quantity"
           name="quantity"
           type="number"
           min="1"
           value={quantity}
           onChange={event => {
-            setQuantity(event.target.value);
+            setQuantity(event.target.value)
           }}
         />
         {searchError ? <div>{searchError}</div> : null}
         {quantity <= 0 ? <div>Quantity must be greater than 0</div> : null}
         <button
-          className="buy-sell-box"
+          className="buy-box-input"
           type="button"
           disabled={
-            tickerSymbol === "" ||
+            tickerSymbol === '' ||
             !!searchError ||
             quantity <= 0 ||
             balance < stock.latestPrice * quantity
@@ -68,12 +70,12 @@ const BuyBox = props => {
           onClick={() => {
             if (quantity > 0) {
               if (ownedSymbols.includes(stock.symbol)) {
-                updateShares(stock, quantity);
+                updateShares(stock, quantity)
               } else {
-                addStock(stock, quantity);
+                addStock(stock, quantity)
               }
-              decreaseBalance(stock.latestPrice, quantity);
-              addBuyTransaction(stock, quantity);
+              decreaseBalance(stock.latestPrice, quantity)
+              addBuyTransaction(stock, quantity)
             }
           }}
         >
@@ -81,8 +83,8 @@ const BuyBox = props => {
         </button>
       </form>
     </div>
-  );
-};
+  )
+}
 
 const mapStateToProps = state => ({
   marketStatus: state.marketStatus,
@@ -90,7 +92,7 @@ const mapStateToProps = state => ({
   searchError: state.stockToBuy.error,
   ownedSymbols: state.portfolio.stocks.map(stock => stock.symbol),
   balance: state.user.balance
-});
+})
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -101,7 +103,7 @@ const mapDispatchToProps = dispatch => {
       dispatch(decreaseBalance(price, quantity)),
     addBuyTransaction: (stock, quantity) =>
       dispatch(addBuyTransaction(stock, quantity))
-  };
-};
+  }
+}
 
-export default connect(mapStateToProps, mapDispatchToProps)(BuyBox);
+export default connect(mapStateToProps, mapDispatchToProps)(BuyBox)
