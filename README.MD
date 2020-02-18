@@ -24,3 +24,5 @@
    • Display red when the current price is less than the day’s open price.
    • Display grey when the current price is equal to the day’s open price.
    • Display green when the current price is greater than the day’s open price.
+
+**_When running test look at test seed file located in test/test-seed.js_**

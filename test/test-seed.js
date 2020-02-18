@@ -1,5 +1,5 @@
-const { User, Transaction, Stock } = require("../../server/db/models");
-const db = require("../../server/db");
+const { User, Transaction, Stock } = require("../server/db/models");
+const db = require("../server/db");
 
 module.exports = async () => {
   await db.sync({ force: true });

@@ -2,7 +2,7 @@ const { expect } = require("chai");
 const supertest = require("supertest");
 const app = require("../../server/index");
 const agent = supertest.agent(app);
-const seed = require("./test-seed");
+const seed = require("../test-seed");
 
 describe("Routes", () => {
   let cody = {

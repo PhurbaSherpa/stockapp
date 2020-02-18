@@ -8,8 +8,7 @@ router.get("/", async (req, res, next) => {
       where: { userId: req.user.id }
     });
     if (stocks) {
-      let value = await Stock.portfolioValue(req.user.id);
-      res.json({ stocks, value });
+      res.json(stocks);
     } else {
       res.sendStatus(204);
     }
@@ -21,25 +20,32 @@ router.get("/", async (req, res, next) => {
 router.post("/", async (req, res, next) => {
   let { stock, quantity } = req.body;
   try {
-    let total = +stock.latestPrice * +quantity;
-    let status;
-    if (stock.latestPrice > stock.openPrice) {
-      status = "POSITIVE";
-    } else if (stock.latestPrice < stock.openPrice) {
-      status = "NEGATIVE";
-    } else status = "EQUAL";
-
-    let newStock = await Stock.create({
-      symbol: stock.symbol,
-      totalValue: total,
-      totalShares: +quantity,
-      userId: req.user.id,
-      status: status
+    let isStockOwned = await Stock.findOne({
+      where: { symbol: stock.symbol, userId: req.user.id }
     });
+    if (isStockOwned) {
+      res.sendStatus(400);
+    } else {
+      let total = +stock.latestPrice * +quantity;
+      let status;
+      if (stock.latestPrice > stock.openPrice) {
+        status = "POSITIVE";
+      } else if (stock.latestPrice < stock.openPrice) {
+        status = "NEGATIVE";
+      } else status = "EQUAL";
 
-    if (!newStock) res.sendStatus(400);
-    else {
-      res.json(newStock);
+      let newStock = await Stock.create({
+        symbol: stock.symbol,
+        totalValue: total,
+        totalShares: +quantity,
+        userId: req.user.id,
+        status: status
+      });
+
+      if (!newStock) res.sendStatus(400);
+      else {
+        res.json(newStock);
+      }
     }
   } catch (error) {
     next(error);
@@ -78,7 +84,7 @@ router.put("/quantity", async (req, res, next) => {
       }
       existingStock.totalShares += +quantity;
       let newTotal = existingStock.totalShares * +stock.latestPrice;
-      existingStock.totalValue = newTotal;
+      existingStock.totalValue = +newTotal.toFixed(2);
       await existingStock.save();
       res.json(existingStock);
     } else res.sendStatus(400);
@@ -112,8 +118,7 @@ router.put("/currentvalues", async (req, res, next) => {
         stock.totalValue = (latestPrice * stock.totalShares).toFixed(2);
         await stock.save();
       });
-      let value = await Stock.portfolioValue(req.user.id);
-      res.json({ stocks, value });
+      res.json(stocks);
     }
   } catch (error) {
     next(error);

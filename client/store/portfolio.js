@@ -93,47 +93,61 @@ export const updateShares = (stock, quantity) => async dispatch => {
     });
     dispatch(updatedStock(data));
   } catch (error) {
-    console.log(errro);
+    console.log(error);
   }
 };
 
 const portfolioReducer = (state = portfolioState, action) => {
   switch (action.type) {
     case GOT_PORTFOLIO:
+      let portfolioValue = 0;
+      action.portfolio.forEach(stock => {
+        portfolioValue += +stock.totalValue;
+      });
+      portfolioValue = +portfolioValue.toFixed(2);
       return {
-        stocks: action.portfolio.stocks,
-        portfolioValue: action.portfolio.value
+        stocks: action.portfolio,
+        portfolioValue: portfolioValue
       };
     case UPDATE_CURRENT_VALUES:
+      let newPortfolioValue = 0;
+      action.portfolio.forEach(stock => {
+        newPortfolioValue += +stock.totalValue;
+      });
+      newPortfolioValue = +newPortfolioValue.toFixed(2);
       return {
-        stocks: action.portfolio.stocks,
-        portfolioValue: action.portfolio.value
+        stocks: action.portfolio,
+        portfolioValue: newPortfolioValue
       };
     case BOUGHT_STOCK:
-      let newPortfolioValue = state.portfolioValue + action.stock.totalValue;
+      let increasedPortfolioValue = +(
+        state.portfolioValue + action.stock.totalValue
+      ).toFixed(2);
       return {
         stocks: [...state.stocks, action.stock],
-        portfolioValue: newPortfolioValue
+        portfolioValue: increasedPortfolioValue
       };
     case UPDATE_STOCK:
       let copy = [...state.stocks];
-      let portfolioValue = state.portfolioValue;
+      let updatedPortfolioValue = state.portfolioValue;
       copy.forEach(stock => {
         if (stock.symbol === action.stock.symbol) {
           stock.totalShares = +action.stock.totalShares;
-          portfolioValue -= stock.totalValue;
+          updatedPortfolioValue -= stock.totalValue;
           stock.totalValue = +action.stock.totalValue;
-          portfolioValue += stock.totalValue;
+          updatedPortfolioValue += stock.totalValue;
+          updatedPortfolioValue = +updatedPortfolioValue.toFixed(2);
         }
       });
       return {
         stocks: copy,
-        portfolioValue: portfolioValue
+        portfolioValue: updatedPortfolioValue
       };
     case DELETE_STOCK:
       let newStocks = [...state.stocks];
-      let decreasedPortfolioValue =
-        state.portfolioValue - action.stock.totalValue;
+      let decreasedPortfolioValue = +(
+        state.portfolioValue - action.stock.totalValue
+      ).toFixed(2);
       newStocks.filter(stock => {
         return stock.symbol !== action.stock.symbol;
       });

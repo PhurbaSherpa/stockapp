@@ -20,19 +20,4 @@ const Stock = db.define("stock", {
   }
 });
 
-Stock.portfolioValue = async function(id) {
-  let value = 0;
-  let myStocks = await Stock.findAll({
-    where: {
-      userId: id
-    }
-  });
-  if (myStocks.length > 0) {
-    myStocks.forEach(stock => {
-      value += +stock.dataValues.totalValue;
-    });
-  }
-  return +value.toFixed(2);
-};
-
 module.exports = Stock;

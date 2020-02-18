@@ -1,10 +1,11 @@
 const { expect } = require("chai");
 const db = require("../../server/db/index");
 const Stock = db.model("stock");
+const seed = require("../test-seed");
 
 describe("Stock Model", () => {
-  beforeEach(() => {
-    return db.sync({ force: true });
+  beforeEach(async () => {
+    await seed();
   });
 
   describe("Stocks Test", () => {

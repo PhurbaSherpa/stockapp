@@ -16,7 +16,7 @@ describe("Routes", () => {
   let userObj2 = {
     firstName: "Murphy",
     lastName: "Moon",
-    email: "murphyEmail@email.com",
+    email: "murphy@email.com",
     password: "AbC123*!"
   };
   beforeEach(async () => {
