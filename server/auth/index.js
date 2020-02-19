@@ -19,12 +19,10 @@ router.post('/login', async (req, res, next) => {
 })
 
 router.post('/signup', async (req, res, next) => {
-  console.log(req.body)
   try {
     const user = await User.create(req.body)
     req.login(user, err => (err ? next(err) : res.json(user)))
   } catch (err) {
-    console.log('the error', err)
     res.status(401).send(err.errors[0].message)
   }
 })

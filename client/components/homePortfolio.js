@@ -15,10 +15,15 @@ const HomePortfolio = props => {
         .join(',')
 
       let interval = setInterval(() => {
-        if (props.marketStatus === 'closed' || !props.isLoggedIn) {
+        if (
+          props.marketStatus === 'closed' ||
+          !props.isLoggedIn ||
+          props.stocks.length === 0
+        ) {
           clearInterval(interval)
+        } else {
+          props.updateCurrentValues(symbols)
         }
-        props.updateCurrentValues(symbols)
       }, 5000)
       async function fetchData() {
         await props.getPortfolio()
