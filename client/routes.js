@@ -20,6 +20,7 @@ const Routes = props => {
         <Switch>
           <Route path="/portfolio" component={Home} />
           <Route path="/transactions" component={Transaction} />
+          <Route component={Home} />
         </Switch>
       )}
       <Route component={Login} />
