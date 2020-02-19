@@ -72,7 +72,7 @@ For personal use go to server/api/quote.js to find where I use my api token and 
 you can then finally start it
 
 ```
-npm run start
+npm run start-dev
 ```
 
 ## Testing
