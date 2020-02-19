@@ -15,7 +15,7 @@ export default function SingleTransaction(props) {
       </div>
       <div className="transaction-info">{symbol}</div>
       <div className="transaction-info">{shares} shares</div>
-      <div className="transaction-info">@ {price}</div>
+      <div className="transaction-info">@ ${price}</div>
     </div>
   )
 }
