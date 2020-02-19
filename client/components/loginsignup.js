@@ -49,7 +49,14 @@ const LoginSignup = props => {
             <div className="error"> {error.response.data} </div>
           )}
       </form>
-      <div id="preview">placeholder</div>
+      <div id="preview-images">
+        <div>
+          <img id="portfolio-img" src="https://i.imgur.com/KgyrSOX.png" />
+        </div>
+        <div>
+          <img id="transactions-img" src="https://i.imgur.com/sk4aID5.png" />
+        </div>
+      </div>
     </div>
   )
 }
