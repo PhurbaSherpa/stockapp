@@ -1,7 +1,6 @@
 const router = require('express').Router()
 const axios = require('axios')
 module.exports = router
-require('../../secrets')
 
 router.get('/:symbol', async (req, res, next) => {
   const {symbol} = req.params
