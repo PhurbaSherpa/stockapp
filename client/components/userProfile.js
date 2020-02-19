@@ -43,7 +43,7 @@ const UserProfile = props => {
               props.deposit(depositAmount)
             }
           }}
-          stripeKey="pk_test_0vURHh6TIC3nhlq3J8R46qu7000i2XBd8K"
+          stripeKey="pk_test_8Y1YW5Xc6CRwnshovcOuNc9g"
         />
       </div>
     </div>
