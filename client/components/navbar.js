@@ -25,6 +25,9 @@ const Navbar = ({handleClick, isLoggedIn, marketStatus, getMarketStatus}) => {
       <h1>StockTrader</h1>
       {isLoggedIn ? (
         <nav className="navlinks">
+          <Link className="navlink-in" to="/profile">
+            PROFILE
+          </Link>
           <Link className="navlink-in" to="/portfolio">
             PORTFOLIO
           </Link>

@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import {withRouter, Route, Switch} from 'react-router-dom'
 import {Login, Signup, Home, Transaction} from './components'
 import {me} from './store'
+import UserProfile from './components/userProfile'
 
 const Routes = props => {
   useEffect(
@@ -18,6 +19,7 @@ const Routes = props => {
       <Route path="/signup" component={Signup} />
       {isLoggedIn && (
         <Switch>
+          <Route path="/profile" component={UserProfile} />
           <Route path="/portfolio" component={Home} />
           <Route path="/transactions" component={Transaction} />
           <Route component={Home} />

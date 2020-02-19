@@ -79,12 +79,11 @@ nav a:hover {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  width: 45%;
+  width: 40%;
 }
 
 .navlink-in {
-  min-width: 10%;
-  font-size: 1.5rem;
+  font-size: 1.1rem;
 }
 
 #auth-form-container {
@@ -387,4 +386,17 @@ img {
   letter-spacing: 1px;
   font-size: 1em;
   width: 60%;
+}
+
+#profile-container {
+  padding: 10%;
+  height: 100vh;
+}
+#profile-info-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-evenly;
+  height: 60%;
+  font-size: 2em;
 }
