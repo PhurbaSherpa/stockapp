@@ -9,10 +9,10 @@ export default function OwnedStockList(props) {
   return (
     <div id="symbols-list">
       <div id="symbol-list-headers">
-        <span className="symbol-info">Symbol</span>
-        <span className="symbol-info">Shares</span>
-        <span className="symbol-info">Price/Share</span>
-        <span className="symbol-info">TotalValue</span>
+        <span className="symbol-info-header">Symbol</span>
+        <span className="symbol-info-header">Shares</span>
+        <span className="symbol-info-header">Price/Share</span>
+        <span className="symbol-info-header">TotalValue</span>
       </div>
       <div id="portfolio-symbols">
         {sortedstocks.length > 0 ? (
@@ -20,7 +20,7 @@ export default function OwnedStockList(props) {
             return <SingleSymbol key={index} stock={stock} />
           })
         ) : (
-          <div>No Stocks Owned</div>
+          <div id="nostocks">No Stocks Owned</div>
         )}
       </div>
     </div>

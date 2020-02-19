@@ -31,9 +31,11 @@ const HomePortfolio = props => {
   )
 
   return (
-    <div id="home-container">
-      <h2>Portfolio: ${(+props.portfolioValue).toFixed(2)}</h2>
-      <div id="symbol-buy-container">
+    <div>
+      <h2 id="portfolio-value">
+        Portfolio: ${(+props.portfolioValue).toFixed(2)}
+      </h2>
+      <div id="home-container">
         <OwnedStockList stocks={props.stocks} />
         <BuyBox />
       </div>

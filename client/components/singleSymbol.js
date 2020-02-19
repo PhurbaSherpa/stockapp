@@ -29,9 +29,9 @@ const SingleSymbol = props => {
     <div className="singleSymbol">
       <div className="symbol-info">{symbol}</div>
       <div className="symbol-info">{totalShares}</div>
-      <div className="symbol-info">{price.toFixed(2)}</div>
+      <div className="symbol-info">${price.toFixed(2)}</div>
       <div className="symbol-info" style={{color: color}}>
-        {totalValue}
+        ${totalValue}
       </div>
       <div className="symbol-info">
         <button

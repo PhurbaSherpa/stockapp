@@ -16,11 +16,7 @@ const Transactions = props => {
   return (
     <div id="transaction-buybox">
       <TransactionList transactions={props.transactions} />
-      <div>
-        <div id="fixed-buybox">
-          <BuyBox />
-        </div>
-      </div>
+      <BuyBox />
     </div>
   )
 }

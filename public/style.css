@@ -10,10 +10,14 @@ body {
 
 h1 {
   margin-left: 2%;
-  font-size: 3em;
+  font-size: 2em;
   font-weight: 800;
   letter-spacing: 1px;
   color: rgba(29, 175, 175, 0.9);
+}
+
+h2 {
+  font-size: 2em;
 }
 
 a {
@@ -68,17 +72,18 @@ nav a:hover {
   align-items: center;
   width: 100%;
   background-color: #171718;
+  z-index: 1;
 }
 
 .navlinks {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  width: 20%;
+  width: 45%;
 }
 
-.navlink-out {
-  min-width: 50%;
+.navlink-in {
+  min-width: 10%;
   font-size: 1.5rem;
 }
 
@@ -142,8 +147,16 @@ nav a:hover {
   margin: 5%;
 }
 
-#home-container {
-  padding-top: 10%;
+#portfolio-value {
+  padding-top: 2%;
+  padding-bottom: 2%;
+  top: 10%;
+  left: 5%;
+  position: fixed;
+  background-color: #202022;
+  width: 100%;
+  height: 5%;
+  z-index: 1;
 }
 
 #symbol-buy-container {
@@ -155,12 +168,21 @@ nav a:hover {
 #symbols-list {
   display: flex;
   flex-direction: column;
-  width: 50%;
+  margin-left: 5%;
+  width: 50vw;
 }
 #symbol-list-headers {
+  margin-top: 10%;
+  padding: 2% 0%;
   display: flex;
   flex-direction: row;
-  width: 100%;
+  width: 50%;
+  position: fixed;
+  background-color: #202022;
+}
+.symbol-info-header {
+  font-size: 1.5em;
+  min-width: 20%;
 }
 
 .singleSymbol {
@@ -168,15 +190,28 @@ nav a:hover {
   flex-direction: row;
   justify-content: space-between;
   border-bottom: 2px solid black;
-  margin: 10% 0;
+  margin: 5% 0;
 }
 .symbol-info {
+  font-size: 1.3em;
   min-width: 20%;
 }
 
+input.symbol-info {
+  width: 20%;
+  height: 10%;
+}
+
 #portfolio-symbols {
+  margin-top: 30%;
   width: 100%;
   height: 100%;
+}
+
+#nostocks {
+  font-size: 1.5em;
+  font-weight: 500;
+  margin-top: 10%;
 }
 
 #buy-container {
@@ -186,6 +221,9 @@ nav a:hover {
   flex-direction: column;
   width: 35vw;
   height: 40vh;
+  position: fixed;
+  left: 60%;
+  top: 30%;
 }
 
 #stock-info {

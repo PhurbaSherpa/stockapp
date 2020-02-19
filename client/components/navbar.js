@@ -9,25 +9,16 @@ const Navbar = ({handleClick, isLoggedIn}) => (
     {isLoggedIn ? (
       <nav className="navlinks">
         <Link className="navlink-in" to="/portfolio">
-          Portfolio
+          PORTFOLIO
         </Link>
         <Link className="navlink-in" to="/transactions">
-          Transactions
+          TRANSACTIONS
         </Link>
         <a className="navlink-in" href="#" onClick={handleClick}>
-          Logout
+          LOGOUT
         </a>
       </nav>
-    ) : (
-      <nav className="navlinks">
-        <Link className="navlink-out" to="/login">
-          LOGIN
-        </Link>
-        <Link className="navlink-out" to="/signup">
-          SIGNUP
-        </Link>
-      </nav>
-    )}
+    ) : null}
   </div>
 )
 
