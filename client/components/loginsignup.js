@@ -40,9 +40,9 @@ const LoginSignup = props => {
             Already have an account?
           </Link>
         )}
-        <a id="google" href="/auth/google">
+        {/* <a id="google" href="/auth/google">
           {displayName} with Google
-        </a>
+        </a> */}
         {error &&
           error.response && (
             <div className="error"> {error.response.data} </div>
