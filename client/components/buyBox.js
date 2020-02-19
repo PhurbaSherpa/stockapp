@@ -24,6 +24,12 @@ const BuyBox = props => {
     balance,
     addBuyTransaction
   } = props
+  let color = 'grey'
+  if (stock.open > stock.latestPrice) {
+    color = 'red'
+  } else if (stock.open < stock.latestPrice) {
+    color = 'green'
+  }
 
   return (
     <div id="buy-container">
@@ -31,8 +37,9 @@ const BuyBox = props => {
       <div id="stock-info">
         <div id="marketStatus">Market Status: {marketStatus.toUpperCase()}</div>
         <div>Symbol: {stock.symbol}</div>
-        <div id="stock-latestPrice">Latest Price: ${stock.latestPrice}</div>
-        <div id="stock-openPrice">Today's Open Price: ${stock.openPrice}</div>
+        <div style={{color: color}} id="stock-latestPrice">
+          Latest Price: ${stock.latestPrice}
+        </div>
       </div>
       <form id="buy-form">
         <input
@@ -41,7 +48,9 @@ const BuyBox = props => {
           name="symbol"
           type="text"
           onChange={event => {
-            getStockInfo(event.target.value)
+            if (event.target.value !== '') {
+              getStockInfo(event.target.value)
+            }
             setTickerSymbol(event.target.value)
           }}
         />
@@ -56,31 +65,39 @@ const BuyBox = props => {
             setQuantity(event.target.value)
           }}
         />
-        {searchError ? <div>{searchError}</div> : null}
-        {quantity <= 0 ? <div>Quantity must be greater than 0</div> : null}
-        <button
-          className="buy-box-input"
-          type="button"
-          disabled={
-            tickerSymbol === '' ||
-            !!searchError ||
-            quantity <= 0 ||
-            balance < stock.latestPrice * quantity
-          }
-          onClick={() => {
-            if (quantity > 0) {
-              if (ownedSymbols.includes(stock.symbol)) {
-                updateShares(stock, quantity)
-              } else {
-                addStock(stock, quantity)
-              }
-              decreaseBalance(stock.latestPrice, quantity)
-              addBuyTransaction(stock, quantity)
+        {searchError ? <div className="error">{searchError}</div> : null}
+        {quantity !== '' && quantity <= 0 ? (
+          <div className="error">Quantity must be greater than 0</div>
+        ) : null}
+        <div id="buy-button-container">
+          <div id="total">
+            Total: $
+            {stock.latestPrice ? (stock.latestPrice * quantity).toFixed(2) : 0}
+          </div>
+          <button
+            className="buy-button"
+            type="button"
+            disabled={
+              tickerSymbol === '' ||
+              !!searchError ||
+              quantity <= 0 ||
+              balance < stock.latestPrice * quantity
             }
-          }}
-        >
-          BUY
-        </button>
+            onClick={() => {
+              if (quantity > 0) {
+                if (ownedSymbols.includes(stock.symbol)) {
+                  updateShares(stock, quantity)
+                } else {
+                  addStock(stock, quantity)
+                }
+                decreaseBalance(stock.latestPrice, quantity)
+                addBuyTransaction(stock, quantity)
+              }
+            }}
+          >
+            BUY
+          </button>
+        </div>
       </form>
     </div>
   )
