@@ -1,8 +1,13 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {connect} from 'react-redux'
+import {deposit} from '../store'
+import StripeCheckout from 'react-stripe-checkout'
 
 const UserProfile = props => {
   const {firstName, lastName, email, balance} = props.user
+
+  const [depositAmount, setDepositAmount] = useState(0)
+
   return (
     <div id="profile-container">
       <div id="profile-info-container">
@@ -23,7 +28,24 @@ const UserProfile = props => {
           <div>${balance}</div>
         </div>
       </div>
-      <div id="deposit-box" />
+      <div id="deposit-box">
+        <input
+          placeholder="Deposit Amount"
+          type="number"
+          min="0"
+          onChange={event => {
+            setDepositAmount(event.target.value)
+          }}
+        />
+        <StripeCheckout
+          token={() => {
+            if (depositAmount > 0) {
+              props.deposit(depositAmount)
+            }
+          }}
+          stripeKey="pk_test_0vURHh6TIC3nhlq3J8R46qu7000i2XBd8K"
+        />
+      </div>
     </div>
   )
 }
@@ -31,5 +53,8 @@ const UserProfile = props => {
 const mapStateToProps = state => ({
   user: state.user
 })
+const mapDispatchToProps = dispatch => ({
+  deposit: amount => dispatch(deposit(amount))
+})
 
-export default connect(mapStateToProps, null)(UserProfile)
+export default connect(mapStateToProps, mapDispatchToProps)(UserProfile)

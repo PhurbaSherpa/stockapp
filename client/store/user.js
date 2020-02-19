@@ -13,6 +13,18 @@ const removeUser = () => ({type: REMOVE_USER})
 const decreasedBalance = user => ({type: DECREASE_BALANCE, user})
 const increasedBalance = user => ({type: INCREASE_BALANCE, user})
 
+export const deposit = amount => async dispatch => {
+  try {
+    const {data} = await axios.put('/api/balance/increase', {
+      price: amount,
+      quantity: 1
+    })
+    dispatch(increasedBalance(data))
+  } catch (error) {
+    console.log(err)
+  }
+}
+
 export const decreaseBalance = (price, quantity) => async dispatch => {
   try {
     const {data} = await axios.put('/api/balance/decrease', {
@@ -121,9 +133,9 @@ export default function(state = defaultUser, action) {
     case REMOVE_USER:
       return defaultUser
     case DECREASE_BALANCE:
-      return {...state}
+      return action.user
     case INCREASE_BALANCE:
-      return {...state}
+      return action.user
     default:
       return state
   }
