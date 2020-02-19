@@ -5,7 +5,6 @@ import {Link} from 'react-router-dom'
 
 const LoginSignup = props => {
   const {name, displayName, handleSubmit, error} = props
-
   return (
     <div id="auth-form-container">
       <form id="auth-form" onSubmit={handleSubmit} name={name}>

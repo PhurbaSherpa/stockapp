@@ -1,12 +1,20 @@
-const crypto = require("crypto");
-const Sequelize = require("sequelize");
-const db = require("../db");
+const crypto = require('crypto')
+const Sequelize = require('sequelize')
+const db = require('../db')
 
-const User = db.define("user", {
+const User = db.define('user', {
   firstName: {
     type: Sequelize.STRING,
-    allowNull: false,
+    allowNull: {
+      args: false,
+      msg: 'Must enter a First Name'
+    },
+
     validate: {
+      notEmpty: {
+        args: true,
+        msg: 'Must enter a First Name'
+      },
       is: {
         args: /^[a-z]+(['-][a-z]*)*$/i,
         msg:
@@ -16,9 +24,15 @@ const User = db.define("user", {
   },
   lastName: {
     type: Sequelize.STRING,
-    allowNull: false,
+    allowNull: {
+      args: false,
+      msg: 'Must enter a Last Name'
+    },
     validate: {
-      notEmpty: true,
+      notEmpty: {
+        args: true,
+        msg: 'Must enter a Last Name'
+      },
       is: {
         args: /^[a-z]+(['-][a-z]*)*$/i,
         msg:
@@ -28,25 +42,37 @@ const User = db.define("user", {
   },
   email: {
     type: Sequelize.STRING,
-    unique: true,
+    unique: {
+      args: true,
+      msg: 'Email is already in use'
+    },
     allowNull: false,
     validate: {
+      notEmpty: {
+        args: true,
+        msg: 'Must enter a email'
+      },
       isEmail: {
         args: [true],
-        msg: "Must be a valid email"
+        msg: 'Must be a valid email'
       }
     }
   },
   password: {
     type: Sequelize.STRING,
+    allowNull: false,
     get() {
-      return () => this.getDataValue("password");
+      return () => this.getDataValue('password')
     },
     validate: {
+      notEmpty: {
+        args: true,
+        msg: 'Must enter a Password'
+      },
       is: {
         args: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$^+=!*()@%&]).{8,20}$/,
         msg:
-          "Must contain at least a number, uppercase, lowercase, and a special character w/ a length of 8-21"
+          'Must contain at least a number, uppercase, lowercase, and a special character w/ a length of 8-21'
       }
     }
   },
@@ -58,41 +84,41 @@ const User = db.define("user", {
   salt: {
     type: Sequelize.STRING,
     get() {
-      return () => this.getDataValue("salt");
+      return () => this.getDataValue('salt')
     }
   },
   googleId: {
     type: Sequelize.STRING
   }
-});
+})
 
-module.exports = User;
+module.exports = User
 
 User.prototype.correctPassword = function(candidatePwd) {
-  return User.encryptPassword(candidatePwd, this.salt()) === this.password();
-};
+  return User.encryptPassword(candidatePwd, this.salt()) === this.password()
+}
 
 User.generateSalt = function() {
-  return crypto.randomBytes(16).toString("base64");
-};
+  return crypto.randomBytes(16).toString('base64')
+}
 
 User.encryptPassword = function(plainText, salt) {
   return crypto
-    .createHash("RSA-SHA256")
+    .createHash('RSA-SHA256')
     .update(plainText)
     .update(salt)
-    .digest("hex");
-};
+    .digest('hex')
+}
 
 const setSaltAndPassword = user => {
-  if (user.changed("password")) {
-    user.salt = User.generateSalt();
-    user.password = User.encryptPassword(user.password(), user.salt());
+  if (user.changed('password')) {
+    user.salt = User.generateSalt()
+    user.password = User.encryptPassword(user.password(), user.salt())
   }
-};
+}
 
-User.beforeCreate(setSaltAndPassword);
-User.beforeUpdate(setSaltAndPassword);
+User.beforeCreate(setSaltAndPassword)
+User.beforeUpdate(setSaltAndPassword)
 User.beforeBulkCreate(users => {
-  users.forEach(setSaltAndPassword);
-});
+  users.forEach(setSaltAndPassword)
+})
