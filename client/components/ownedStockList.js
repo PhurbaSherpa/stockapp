@@ -7,14 +7,14 @@ export default function OwnedStockList(props) {
   })
 
   return (
-    <div id="symbols-list">
+    <div id="symbols-list-container">
       <div id="symbol-list-headers">
         <span className="symbol-info-header">Symbol</span>
         <span className="symbol-info-header">Shares</span>
         <span className="symbol-info-header">Price/Share</span>
         <span className="symbol-info-header">TotalValue</span>
       </div>
-      <div id="portfolio-symbols">
+      <div id="symbols-list">
         {sortedstocks.length > 0 ? (
           sortedstocks.map((stock, index) => {
             return <SingleSymbol key={index} stock={stock} />

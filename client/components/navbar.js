@@ -25,21 +25,21 @@ const Navbar = ({handleClick, isLoggedIn, marketStatus, getMarketStatus}) => {
       <h1>StockTrader</h1>
       {isLoggedIn ? (
         <nav className="navlinks">
-          <Link className="navlink-in" to="/profile">
+          <Link className="navlink" to="/profile">
             PROFILE/DEPOSIT
           </Link>
-          <Link className="navlink-in" to="/portfolio">
+          <Link className="navlink" to="/portfolio">
             PORTFOLIO
           </Link>
-          <Link className="navlink-in" to="/transactions">
+          <Link className="navlink" to="/transactions">
             TRANSACTIONS
           </Link>
-          <a className="navlink-in" href="#" onClick={handleClick}>
+          <a className="navlink" href="#" onClick={handleClick}>
             LOGOUT
           </a>
         </nav>
       ) : (
-        <div id="market-status">
+        <div className="market-status">
           MARKET STATUS:{' '}
           <span style={{color: color}}>{marketStatus.toUpperCase()}</span>
         </div>

@@ -11,19 +11,19 @@ const LoginSignup = props => {
         <div id="auth-type">{name === 'signup' ? 'SIGNUP' : 'LOGIN'}</div>
 
         {name === 'signup' ? (
-          <div className="inputContainer">
+          <div className="auth-input-container">
             <input placeholder="First Name" name="firstName" type="text" />
           </div>
         ) : null}
         {name === 'signup' ? (
-          <div className="inputContainer">
+          <div className="auth-input-container">
             <input placeholder="Last Name" name="lastName" type="text" />
           </div>
         ) : null}
-        <div className="inputContainer">
+        <div className="auth-input-container">
           <input placeholder="Email" name="email" type="text" />
         </div>
-        <div className="inputContainer">
+        <div className="auth-input-container">
           <input placeholder="Password" name="password" type="password" />
         </div>
         <div id="auth-button-container">
@@ -50,10 +50,10 @@ const LoginSignup = props => {
       </form>
       <div id="preview-images">
         <div>
-          <img id="portfolio-img" src="https://i.imgur.com/T56DNna.png" />
+          <img src="https://i.imgur.com/T56DNna.png" />
         </div>
         <div>
-          <img id="transactions-img" src="https://i.imgur.com/dk1BxqP.png" />
+          <img src="https://i.imgur.com/dk1BxqP.png" />
         </div>
       </div>
     </div>

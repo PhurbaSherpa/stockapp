@@ -32,15 +32,15 @@ const BuyBox = props => {
   }
 
   return (
-    <div id="buy-container">
+    <div id="buy-box-container">
       <h2>MY CASH: ${(+props.balance).toFixed(2)}</h2>
       <div id="stock-info">
-        <div id="marketStatus">
+        <div>
           Market Status:
           <span style={{color: color}}> {marketStatus.toUpperCase()}</span>
         </div>
         <div>Symbol: {stock.symbol}</div>
-        <div id="stock-latestPrice">Latest Price: ${stock.latestPrice}</div>
+        <div>Latest Price: ${stock.latestPrice}</div>
       </div>
       <form id="buy-form">
         <input

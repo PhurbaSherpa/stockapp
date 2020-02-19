@@ -20,6 +20,12 @@ h2 {
   font-size: 2.5em;
 }
 
+img {
+  box-shadow: 0px 0px 10px rgba(20, 138, 138, 0.9);
+  margin-top: 10%;
+  width: 90%;
+}
+
 a {
   text-decoration: none;
   color: #dfd9d9;
@@ -31,6 +37,23 @@ nav a {
   letter-spacing: 0.2em;
   color: #dfd9d9;
   font-weight: 700;
+}
+
+a:hover {
+  transform: scale(1.1);
+}
+
+nav a:hover {
+  color: rgba(20, 138, 138, 0.9);
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px #000000 inset;
+  box-shadow: 0 0 0 100px #000000 inset;
+  -webkit-text-fill-color: #dfd9d9;
 }
 
 input {
@@ -48,20 +71,12 @@ input:hover {
   border: 2px solid rgba(20, 138, 138, 0.9);
 }
 
-.inputContainer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 60%;
+/* error messages */
+.error {
+  margin-bottom: 5%;
 }
 
-a:hover {
-  transform: scale(1.1);
-}
-
-nav a:hover {
-  color: rgba(20, 138, 138, 0.9);
-}
+/* Navbar css */
 
 #navbar {
   height: 10vh;
@@ -74,7 +89,6 @@ nav a:hover {
   background-color: #171718;
   z-index: 1;
 }
-
 .navlinks {
   display: flex;
   flex-direction: row;
@@ -82,9 +96,20 @@ nav a:hover {
   width: 50%;
 }
 
-.navlink-in {
+.navlink {
   font-size: 1.1rem;
 }
+
+.market-status {
+  text-align: right;
+  margin-right: 2%;
+  font-weight: 800;
+  letter-spacing: 1px;
+  font-size: 1em;
+  width: 60%;
+}
+
+/* LoginSignUp css */
 
 #auth-form-container {
   display: flex;
@@ -92,12 +117,6 @@ nav a:hover {
   justify-content: space-around;
   align-items: center;
   height: 90vh;
-}
-
-#auth-type {
-  margin: 5%;
-  font-size: 2em;
-  font-weight: 700;
 }
 
 #auth-form {
@@ -108,6 +127,19 @@ nav a:hover {
   justify-content: center;
   align-items: center;
   flex-direction: column;
+}
+
+#auth-type {
+  margin: 5%;
+  font-size: 2em;
+  font-weight: 700;
+}
+
+.auth-input-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 60%;
 }
 
 #auth-button-container {
@@ -140,6 +172,17 @@ nav a:hover {
 #google {
   margin: 5%;
 }
+#preview-images {
+  margin-top: 5%;
+  width: 40%;
+  height: 60%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Portfolio css */
 
 #portfolio-value {
   padding-top: 2%;
@@ -153,18 +196,15 @@ nav a:hover {
   z-index: 1;
 }
 
-#symbol-buy-container {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-around;
-}
-#symbols-list {
+/* OwnedstockList css */
+
+#symbols-list-container {
   display: flex;
   flex-direction: column;
   margin-left: 5%;
   width: 50vw;
 }
+
 #symbol-list-headers {
   margin-top: 10%;
   padding: 2% 0%;
@@ -179,7 +219,20 @@ nav a:hover {
   min-width: 20%;
 }
 
-.singleSymbol {
+#symbols-list {
+  margin-top: 30%;
+  width: 100%;
+  height: 100%;
+}
+
+#nostocks {
+  font-size: 1.5em;
+  font-weight: 500;
+  margin-top: 10%;
+}
+
+/* singleSymbol */
+#single-symbol-container {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -192,7 +245,6 @@ nav a:hover {
   min-width: 20%;
   align-items: center;
 }
-
 #sell-button {
   width: 30%;
   height: 40%;
@@ -204,25 +256,14 @@ nav a:hover {
   box-shadow: 0 0 30px rgba(20, 138, 138, 0.9);
 }
 
-input.symbol-info {
+.sell-input {
   width: 20%;
   height: 10%;
   font-size: 0.8em;
 }
 
-#portfolio-symbols {
-  margin-top: 30%;
-  width: 100%;
-  height: 100%;
-}
-
-#nostocks {
-  font-size: 1.5em;
-  font-weight: 500;
-  margin-top: 10%;
-}
-
-#buy-container {
+/* BuyBox css */
+#buy-box-container {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -230,10 +271,9 @@ input.symbol-info {
   width: 40vw;
   height: 100vh;
   position: fixed;
-  left: 60%;
+  left: 58%;
   top: 23%;
 }
-
 #stock-info {
   font-size: 1.2em;
   margin: 5%;
@@ -284,12 +324,44 @@ input.symbol-info {
   box-shadow: 0 0 30px rgba(20, 138, 138, 0.9);
 }
 
+/* Profile */
+
+#profile-container {
+  padding-top: 10%;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+#profile-info-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-evenly;
+  height: 60%;
+  font-size: 2em;
+}
+
+#deposit-box {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  width: 20%;
+}
+
+/* transactions page */
+
 #transaction-buybox {
   display: flex;
   flex-direction: row;
   padding-top: 10%;
   width: 100vw;
 }
+
+/* transaction-list */
+
 #transactions-container {
   display: flex;
   flex-direction: column;
@@ -320,95 +392,24 @@ input.symbol-info {
   width: 20%;
 }
 
-#symbol-list-headers {
-  margin-top: 10%;
-  padding: 2% 0%;
-  display: flex;
-  flex-direction: row;
-  width: 50%;
-  position: fixed;
-  background-color: #202022;
-}
-
 #transaction-list {
   display: flex;
   flex-direction: column-reverse;
   margin-top: 10%;
 }
 
+/* single-transaction */
+
 #singleTransaction {
   display: flex;
   flex-direction: row;
   border-bottom: 1px solid black;
   align-items: center;
-  width: 42vw;
+  width: 50vw;
   height: 10vh;
 }
 
 .transaction-info {
-  min-width: 20%;
+  min-width: 17%;
   font-size: 1.2em;
-}
-
-input:-webkit-autofill,
-input:-webkit-autofill:focus,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:active {
-  -webkit-box-shadow: 0 0 0 30px #000000 inset;
-  box-shadow: 0 0 0 100px #000000 inset;
-  -webkit-text-fill-color: #dfd9d9;
-}
-
-.error {
-  margin-bottom: 5%;
-}
-
-#preview-images {
-  margin-top: 5%;
-  width: 40%;
-  height: 60%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-img {
-  box-shadow: 0px 0px 10px rgba(20, 138, 138, 0.9);
-  margin-top: 10%;
-  width: 90%;
-}
-
-#market-status {
-  text-align: right;
-  margin-right: 2%;
-  font-weight: 800;
-  letter-spacing: 1px;
-  font-size: 1em;
-  width: 60%;
-}
-
-#profile-container {
-  padding-top: 10%;
-  height: 100vh;
-  width: 100vw;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-}
-#profile-info-container {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: space-evenly;
-  height: 60%;
-  font-size: 2em;
-}
-
-#deposit-box {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
-  width: 20%;
 }

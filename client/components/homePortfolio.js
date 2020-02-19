@@ -40,10 +40,8 @@ const HomePortfolio = props => {
       <h2 id="portfolio-value">
         Portfolio: ${(+props.portfolioValue).toFixed(2)}
       </h2>
-      <div id="home-container">
-        <OwnedStockList stocks={props.stocks} />
-        <BuyBox />
-      </div>
+      <OwnedStockList stocks={props.stocks} />
+      <BuyBox />
     </div>
   )
 }

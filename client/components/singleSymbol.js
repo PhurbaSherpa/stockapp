@@ -32,7 +32,7 @@ const SingleSymbol = props => {
     color = 'red'
   }
   return (
-    <div className="singleSymbol">
+    <div id="single-symbol-container">
       <div className="symbol-info">{symbol}</div>
       <div className="symbol-info">{totalShares}</div>
       <div className="symbol-info">${price.toFixed(2)}</div>
@@ -59,7 +59,7 @@ const SingleSymbol = props => {
           SELL
         </button>
         <input
-          className="symbol-info"
+          className="sell-input"
           type="number"
           max={`${totalShares}`}
           min="0"
