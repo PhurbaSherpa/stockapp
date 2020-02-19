@@ -6,8 +6,6 @@ const BOUGHT_STOCK = 'BOUGHT_STOCK'
 const UPDATE_STOCK = 'UPDATE_STOCK'
 const DELETE_STOCK = 'DELETE_STOCK'
 
-require('../../secrets')
-
 const portfolioState = {
   stocks: [],
   portfolioValue: 0
@@ -50,11 +48,7 @@ export const getPortfolio = () => async dispatch => {
 export const updateCurrentValues = symbols => async dispatch => {
   let res
   try {
-    res = await axios.get(
-      `https://cloud.iexapis.com/stable/stock/market/batch?symbols=${symbols}&types=quote&token=${
-        process.env.STOCK_API_TOKEN
-      }`
-    )
+    res = await axios.get(`/api/quote/batch/${symbols}`)
   } catch (error) {
     return console.log(error)
   }
