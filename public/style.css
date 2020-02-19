@@ -33,7 +33,7 @@ input {
   width: 100%;
   margin: 5%;
   font-size: 1em;
-  padding: 8% 8%;
+  padding: 6% 6%;
   background-color: #000000;
   border: 2px solid #000000;
   border-radius: 5px;
@@ -91,12 +91,13 @@ nav a:hover {
 }
 
 #auth-type {
+  margin: 5%;
   font-size: 2em;
   font-weight: 700;
 }
 
 #auth-form {
-  height: 60%;
+  margin-top: 5%;
   width: 30%;
   display: flex;
   box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.9);
@@ -131,6 +132,14 @@ nav a:hover {
 
 #auth-button:hover {
   box-shadow: 0 0 12px #88e68d;
+}
+
+.question {
+  color: rgba(20, 138, 138, 0.9);
+  margin-bottom: 2%;
+}
+#google {
+  margin: 5%;
 }
 
 #home-container {

@@ -33,9 +33,13 @@ const LoginSignup = props => {
           </button>
         </div>
         {name === 'login' ? (
-          <Link to="/signup">Don't have an account yet?</Link>
+          <Link className="question" to="/signup">
+            Don't have an account yet?
+          </Link>
         ) : (
-          <Link to="/login">Already have an account?</Link>
+          <Link className="question" to="/login">
+            Already have an account?
+          </Link>
         )}
         <a id="google" href="/auth/google">
           {displayName} with Google
