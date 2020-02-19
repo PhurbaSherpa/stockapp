@@ -1,5 +1,5 @@
 LIVE LINK : https://ttp-stockapp.herokuapp.com/
-Test-User : email : cody@email.com password: abc123ABC!\*,
+Test-User : email : cody@email.com password: abc123ABC!\*
 
 # Stock Trader
 
