@@ -2,6 +2,10 @@ import React from 'react'
 import SingleSymbol from './singleSymbol'
 
 export default function OwnedStockList(props) {
+  let sortedstocks = props.stocks.sort((a, b) => {
+    return b.totalValue - a.totalValue
+  })
+
   return (
     <div id="symbols-list">
       <div id="symbol-list-headers">
@@ -11,8 +15,8 @@ export default function OwnedStockList(props) {
         <span className="symbol-info">TotalValue</span>
       </div>
       <div id="portfolio-symbols">
-        {props.stocks.length > 0 ? (
-          props.stocks.map((stock, index) => {
+        {sortedstocks.length > 0 ? (
+          sortedstocks.map((stock, index) => {
             return <SingleSymbol key={index} stock={stock} />
           })
         ) : (

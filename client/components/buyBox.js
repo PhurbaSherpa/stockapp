@@ -27,7 +27,7 @@ const BuyBox = props => {
 
   return (
     <div id="buy-container">
-      <h2>Cash ${props.balance}</h2>
+      <h2>Cash ${(+props.balance).toFixed(2)}</h2>
       <div id="stock-info">
         <div id="marketStatus">Market Status: {marketStatus.toUpperCase()}</div>
         <div>Symbol: {stock.symbol}</div>
