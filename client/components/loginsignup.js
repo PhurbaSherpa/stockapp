@@ -50,10 +50,10 @@ const LoginSignup = props => {
       </form>
       <div id="preview-images">
         <div>
-          <img id="portfolio-img" src="https://i.imgur.com/KgyrSOX.png" />
+          <img id="portfolio-img" src="https://i.imgur.com/T56DNna.png" />
         </div>
         <div>
-          <img id="transactions-img" src="https://i.imgur.com/sk4aID5.png" />
+          <img id="transactions-img" src="https://i.imgur.com/dk1BxqP.png" />
         </div>
       </div>
     </div>

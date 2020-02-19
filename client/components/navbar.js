@@ -26,7 +26,7 @@ const Navbar = ({handleClick, isLoggedIn, marketStatus, getMarketStatus}) => {
       {isLoggedIn ? (
         <nav className="navlinks">
           <Link className="navlink-in" to="/profile">
-            PROFILE
+            PROFILE/DEPOSIT
           </Link>
           <Link className="navlink-in" to="/portfolio">
             PORTFOLIO

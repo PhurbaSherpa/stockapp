@@ -24,10 +24,10 @@ const BuyBox = props => {
     balance,
     addBuyTransaction
   } = props
-  let color = 'grey'
-  if (stock.open > stock.latestPrice) {
+  let color
+  if (marketStatus === 'closed') {
     color = 'red'
-  } else if (stock.open < stock.latestPrice) {
+  } else {
     color = 'green'
   }
 
@@ -35,11 +35,12 @@ const BuyBox = props => {
     <div id="buy-container">
       <h2>MY CASH: ${(+props.balance).toFixed(2)}</h2>
       <div id="stock-info">
-        <div id="marketStatus">Market Status: {marketStatus.toUpperCase()}</div>
-        <div>Symbol: {stock.symbol}</div>
-        <div style={{color: color}} id="stock-latestPrice">
-          Latest Price: ${stock.latestPrice}
+        <div id="marketStatus">
+          Market Status:
+          <span style={{color: color}}> {marketStatus.toUpperCase()}</span>
         </div>
+        <div>Symbol: {stock.symbol}</div>
+        <div id="stock-latestPrice">Latest Price: ${stock.latestPrice}</div>
       </div>
       <form id="buy-form">
         <input
